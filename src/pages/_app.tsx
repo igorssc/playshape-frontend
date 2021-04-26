@@ -1,6 +1,6 @@
 import PageNProgress from 'next-styled-nprogress'
 import { AppProps } from 'next/app'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ThemeProvider } from 'styled-components'
 import Styledtheme from 'styled-theming'
 import { Footer } from '../components/Footer/Footer'
@@ -10,6 +10,13 @@ import colors from '../styles/colors'
 import { GlobalStyle } from '../styles/global'
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
+  React.useEffect(() => {
+    const jssStyles = document.querySelector('#jss-server-side')
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles)
+    }
+  }, [])
+
   const [theme, setTheme] = useState<string>('light')
 
   useEffect(() => {
