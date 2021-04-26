@@ -1,30 +1,29 @@
-import { ServerStyleSheets } from '@material-ui/styles'
-import NextDocument, {
-  DocumentContext,
-  Head,
-  Html,
-  Main,
-  NextScript
-} from 'next/document'
-import React from 'react'
+import NextDocument, { Head, Html, Main, NextScript } from 'next/document'
+import { ServerStyleSheet } from 'styled-components'
 
 class Document extends NextDocument {
-  static async getInitialProps(context: DocumentContext) {
-    const sheets = new ServerStyleSheets()
-    const originalRenderPage = context.renderPage
+  static async getInitialProps(ctx) {
+    const sheet = new ServerStyleSheet()
+    const originalRenderPage = ctx.renderPage
 
-    context.renderPage = () =>
-      originalRenderPage({
-        enhanceApp: App => props => sheets.collect(<App {...props} />)
-      })
+    try {
+      ctx.renderPage = () =>
+        originalRenderPage({
+          enhanceApp: App => props => sheet.collectStyles(<App {...props} />)
+        })
 
-    const initialProps = await NextDocument.getInitialProps(context)
-    return {
-      ...initialProps,
-      styles: [
-        ...React.Children.toArray(initialProps.styles),
-        sheets.getStyleElement()
-      ]
+      const initialProps = await NextDocument.getInitialProps(ctx)
+      return {
+        ...initialProps,
+        styles: (
+          <>
+            {initialProps.styles}
+            {sheet.getStyleElement()}
+          </>
+        )
+      }
+    } finally {
+      sheet.seal()
     }
   }
 

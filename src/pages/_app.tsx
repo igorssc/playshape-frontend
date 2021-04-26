@@ -10,13 +10,6 @@ import colors from '../styles/colors'
 import { GlobalStyle } from '../styles/global'
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
-  React.useEffect(() => {
-    const jssStyles = document.querySelector('#jss-server-side')
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles)
-    }
-  }, [])
-
   const [theme, setTheme] = useState<string>('light')
 
   useEffect(() => {
