@@ -1,4 +1,3 @@
-import { FormControl } from '@material-ui/core'
 import Link from 'next/link'
 import { Dispatch, SetStateAction } from 'react'
 import { formatCurrency } from '../../utils/format'
@@ -69,10 +68,6 @@ interface DetailsProductProps {
       }
     }>
   >
-  size: string
-  setSize: Dispatch<SetStateAction<string>>
-  flavor: string
-  setFlavor: Dispatch<SetStateAction<string>>
   sizes: string[]
   flavors: string[]
 }
@@ -81,10 +76,6 @@ export const DetailsProduct = ({
   product,
   variant,
   setVariant,
-  size,
-  setSize,
-  flavor,
-  setFlavor,
   sizes,
   flavors
 }: DetailsProductProps) => {
@@ -109,40 +100,33 @@ export const DetailsProduct = ({
             </h2>
             <p>{product.brand}</p>
             <form action="#">
-              <FormControl>
-                <Select
-                  label="Tamanho"
-                  items={sizes}
-                  value={size}
-                  onChange={e => {
-                    setSize(String(e.target.value))
-                    setFlavor(
-                      product.variants.find(
-                        variant => variant.size == String(e.target.value)
-                      ).flavor
+              <Select
+                label="Tamanho"
+                items={sizes}
+                value={variant.size}
+                onChange={e => {
+                  setVariant(
+                    product.variants.find(
+                      variant => variant.size == String(e.target.value)
                     )
-                  }}
-                />
-              </FormControl>
-              <FormControl>
-                <Select
-                  label="Sabor"
-                  items={flavors}
-                  value={flavor}
-                  disabled={!size && true}
-                  onChange={e => {
-                    setFlavor(String(e.target.value))
+                  )
+                }}
+              />
 
-                    setVariant(
-                      product.variants.find(
-                        variant =>
-                          variant.flavor === String(e.target.value) &&
-                          variant.size === size
-                      )
+              <Select
+                label="Sabor"
+                items={flavors}
+                value={variant.flavor}
+                onChange={e => {
+                  setVariant(
+                    product.variants.find(
+                      variant =>
+                        variant.flavor === String(e.target.value) &&
+                        variant.size === variant.size
                     )
-                  }}
-                />
-              </FormControl>
+                  )
+                }}
+              />
             </form>
             <div className="details">
               <p>{variant.quantity} disponíveis</p>

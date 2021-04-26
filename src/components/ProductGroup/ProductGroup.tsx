@@ -46,7 +46,11 @@ export const ProductGroup = ({ product }: ProductGroupProps) => {
     <Container>
       <Content>
         <img src={product.variants[0].picture.url} alt={product.name} />
-        <h1>{product.name}</h1>
+        <Link href={`/product/${product._id}`}>
+          <a className="name">
+            <h1>{product.name}</h1>
+          </a>
+        </Link>
         <h2>{product.brand}</h2>
         <h2>
           Vendido por{' '}

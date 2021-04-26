@@ -2,7 +2,10 @@ import styled from 'styled-components'
 import theme from 'styled-theming'
 import colors from '../../styles/colors'
 
-export const Container = styled.div``
+export const Container = styled.div`
+  width: 100%;
+  padding-top: 2rem;
+`
 
 export const Content = styled.div`
   max-width: 1120px;

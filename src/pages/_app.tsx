@@ -42,7 +42,9 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
         delay={200}
       />
       <Header />
-      <Switch checked={theme === 'dark'} handleChange={handleTheme} />
+      <div style={{ position: 'absolute' }}>
+        <Switch checked={theme === 'dark'} handleChange={handleTheme} />
+      </div>
       <Component {...pageProps} theme={theme} setTheme={setTheme} />
       <Footer />
     </ThemeProvider>

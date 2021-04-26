@@ -89,25 +89,16 @@ const ProductPage: NextPage = ({
     ProductPageProps['product']['variants'][0]
   >(product.variants[0])
 
-  const [sizeSelected, setSizeSelected] = useState<string>(
-    product.variants[0].size
-  )
-  const [flavorSelected, setFlavorSelected] = useState<string>(
-    product.variants[0].flavor
-  )
-
   const sizes = product.variants
     .map(variant => variant.size)
     .filter((value, index, product) => product.indexOf(value) === index)
 
   const flavors = product.variants
-    .filter(variant => variant.size === sizeSelected)
+    .filter(variant => variant.size === variant.size)
     .map(variant => variant.flavor)
 
   useEffect(() => {
     setVariant(product.variants[0])
-    setSizeSelected(product.variants[0].size)
-    setFlavorSelected(product.variants[0].flavor)
   }, [product])
 
   return (
@@ -119,10 +110,6 @@ const ProductPage: NextPage = ({
         product={product}
         variant={variant}
         setVariant={setVariant}
-        size={sizeSelected}
-        setSize={setSizeSelected}
-        flavor={flavorSelected}
-        setFlavor={setFlavorSelected}
         sizes={sizes}
         flavors={flavors}
       />

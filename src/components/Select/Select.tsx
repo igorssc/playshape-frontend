@@ -1,4 +1,5 @@
 import {
+  FormControl,
   InputLabel,
   MenuItem,
   Select as SelectElement
@@ -28,21 +29,23 @@ export const Select = ({
 }: SelectProps) => {
   return (
     <Container>
-      <InputLabel id="size-select-label">{label}</InputLabel>
-      <SelectElement
-        labelId="size-select-label"
-        onChange={onChange}
-        disabled={disabled ?? false}
-        value={value}
-      >
-        {items.map(item => {
-          return (
-            <MenuItem key={item} value={item}>
-              {item}
-            </MenuItem>
-          )
-        })}
-      </SelectElement>
+      <FormControl>
+        <InputLabel id="size-select-label">{label}</InputLabel>
+        <SelectElement
+          labelId="size-select-label"
+          onChange={onChange}
+          disabled={disabled ?? false}
+          value={value}
+        >
+          {items.map(item => {
+            return (
+              <MenuItem key={item} value={item}>
+                {item}
+              </MenuItem>
+            )
+          })}
+        </SelectElement>
+      </FormControl>
     </Container>
   )
 }

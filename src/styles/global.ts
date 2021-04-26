@@ -1,3 +1,4 @@
+import { lighten } from 'polished'
 import { createGlobalStyle } from 'styled-components'
 import theme from 'styled-theming'
 import colors from './colors'
@@ -7,6 +8,26 @@ export const GlobalStyle = createGlobalStyle`
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+  ::-webkit-scrollbar-track {
+    background-color: ${theme('mode', {
+      light: colors.grayLighter,
+      dark: lighten(0.05, colors.grayDarker)
+    })};
+  }
+  ::-webkit-scrollbar {
+      width: 16px;
+      background: ${theme('mode', {
+        light: colors.grayLighter,
+        dark: lighten(0.05, colors.grayDarker)
+      })};
+  }
+  ::-webkit-scrollbar-thumb {
+      background: ${theme('mode', {
+        light: lighten(0.2, colors.yellowLight),
+        dark: lighten(0.2, colors.grayDarker)
+      })};
+  }
 }
 
 @media (max-width: 1080px) {
@@ -22,6 +43,8 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 body {
+  padding: 0 !important;
+  position: static;
   background: ${theme('mode', {
     light: colors.white,
     dark: colors.grayDarker
