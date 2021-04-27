@@ -171,7 +171,11 @@ export const Content = styled.div`
   }
 
   @media (max-width: 920px) {
-    grid-template-columns: 1fr;
+    main {
+      div:nth-child(1) {
+        grid-template-columns: 1fr;
+      }
+    }
 
     h1 {
       font-size: 1.2rem;
@@ -180,7 +184,11 @@ export const Content = styled.div`
   }
 
   @media (min-width: 920px) {
-    grid-template-columns: repeat(2, 1fr);
+    main {
+      div:nth-child(1) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
 
     h1 {
       font-size: 1.5rem;
