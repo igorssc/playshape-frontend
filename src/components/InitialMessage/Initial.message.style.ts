@@ -20,6 +20,10 @@ export const Content = styled.div`
     justify-content: center;
     flex-direction: column;
 
+    h1 {
+      text-align: center;
+    }
+
     p {
       font-size: 1.1rem;
       line-height: 2rem;
