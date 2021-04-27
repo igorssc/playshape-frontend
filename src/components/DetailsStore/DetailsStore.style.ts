@@ -8,17 +8,14 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   max-width: 1120px;
-  margin: 0 auto;
   padding-bottom: 4rem;
 
   > div > h1 {
-    font-size: 1.5rem;
     margin-bottom: 2rem;
   }
 
   main {
     display: grid;
-    grid-template-columns: 1fr 1fr;
 
     > div:nth-child(1) {
       border: 2px solid
@@ -26,14 +23,10 @@ export const Content = styled.div`
           light: colors.grayLight,
           dark: colors.grayDark
         })};
-      width: 200px;
-      height: 200px;
       border-radius: 100%;
       overflow: hidden;
 
       img {
-        width: 200px;
-        height: 200px;
         object-fit: cover;
         object-position: center;
       }
@@ -41,7 +34,6 @@ export const Content = styled.div`
       > ul:first-child {
         & > li {
           list-style: none;
-          /* text-align: center; */
         }
       }
     }
@@ -56,6 +48,54 @@ export const Content = styled.div`
 
         > p {
           margin: 0.5rem auto;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1120px) {
+    margin: 0 2rem;
+
+    > div > h1 {
+      font-size: 1.2rem;
+    }
+
+    main {
+      grid-template-columns: 1fr;
+
+      > div + div {
+        margin-top: 2rem;
+      }
+
+      div:nth-child(1) {
+        width: 100px;
+        height: 100px;
+
+        img {
+          width: 100px;
+          height: 100px;
+        }
+      }
+    }
+  }
+
+  @media (min-width: 1120px) {
+    margin: 0 auto;
+
+    > div > h1 {
+      font-size: 1.5rem;
+    }
+
+    main {
+      grid-template-columns: repeat(2, 1fr);
+
+      div:nth-child(1) {
+        width: 200px;
+        height: 200px;
+
+        img {
+          width: 200px;
+          height: 200px;
         }
       }
     }

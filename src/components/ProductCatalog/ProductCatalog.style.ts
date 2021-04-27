@@ -24,7 +24,6 @@ export const Content = styled.div`
 
   > h1 {
     text-align: center;
-    font-size: 1.5rem;
   }
 
   @media (max-width: 768px) {
@@ -40,6 +39,16 @@ export const Content = styled.div`
       > div {
         grid-template-columns: 1fr;
       }
+    }
+
+    h1 {
+      font-size: 1.2rem;
+    }
+  }
+
+  @media (min-width: 576px) {
+    h1 {
+      font-size: 1.5rem;
     }
   }
 

@@ -5,7 +5,6 @@ import { ThemeProvider } from 'styled-components'
 import Styledtheme from 'styled-theming'
 import { Footer } from '../components/Footer/Footer'
 import { Header } from '../components/Header/Header'
-import { Switch } from '../components/Switch/Switch'
 import colors from '../styles/colors'
 import { GlobalStyle } from '../styles/global'
 
@@ -42,9 +41,9 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
         delay={200}
       />
       <Header />
-      <div style={{ position: 'absolute' }}>
+      {/* <div style={{ position: 'absolute' }}>
         <Switch checked={theme === 'dark'} handleChange={handleTheme} />
-      </div>
+      </div> */}
       <Component {...pageProps} theme={theme} setTheme={setTheme} />
       <Footer />
     </ThemeProvider>
