@@ -13,7 +13,6 @@ export const Content = styled.div`
 
   > h1 {
     text-align: center;
-    font-size: 1.5rem;
   }
 
   main {
@@ -21,7 +20,6 @@ export const Content = styled.div`
 
     > div:nth-child(1) {
       display: grid;
-      grid-template-columns: 1fr 1fr;
 
       > div {
         display: flex;
@@ -145,6 +143,47 @@ export const Content = styled.div`
       p {
         text-align: justify;
       }
+    }
+  }
+
+  @media (max-width: 1120px) {
+    main {
+      > div:nth-child(1) {
+        > div:nth-child(1) {
+          height: 300px;
+
+          img {
+            height: 100%;
+            max-width: 95%;
+          }
+        }
+        > div:nth-child(2) {
+          .details {
+            margin-top: 2rem;
+          }
+        }
+      }
+
+      > div:nth-child(2) {
+        margin: 0 1rem;
+      }
+    }
+  }
+
+  @media (max-width: 920px) {
+    grid-template-columns: 1fr;
+
+    h1 {
+      font-size: 1.2rem;
+      margin: auto 1rem;
+    }
+  }
+
+  @media (min-width: 920px) {
+    grid-template-columns: repeat(2, 1fr);
+
+    h1 {
+      font-size: 1.5rem;
     }
   }
 `

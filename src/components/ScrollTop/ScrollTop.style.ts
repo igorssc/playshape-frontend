@@ -8,8 +8,7 @@ type ContainerType = {
 
 export const Container = styled.div<ContainerType>`
   position: fixed;
-  right: 40px;
-  bottom: 40px;
+
   background: ${theme('mode', {
     light: colors.grayDark,
     dark: colors.grayLight
@@ -29,5 +28,15 @@ export const Container = styled.div<ContainerType>`
 
   &:hover {
     filter: brightness(0.8);
+  }
+
+  @media (max-width: 768px) {
+    right: 20px;
+    bottom: 20px;
+  }
+
+  @media (min-width: 768px) {
+    right: 40px;
+    bottom: 40px;
   }
 `
