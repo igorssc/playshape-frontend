@@ -34,6 +34,7 @@ interface StorePageProps {
     description: string
     status: string
     brand: string
+    slug: string
     category: {
       _id: string
       name: string
@@ -60,7 +61,6 @@ interface StorePageProps {
       quantity: string
       picture: {
         url: string
-        filename: string
       }
     }[]
   }[]
@@ -96,7 +96,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { slug } = params
 
   try {
-    const { data: dataStore } = await client.query({
+    const { data } = await client.query({
       query: gql`
       {
         findStore(input: { slug: "${String(slug)}" }) {
@@ -119,21 +119,15 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
           created_at
           status
         }
-      }
-    `
-    })
-    const { data: dataProducts } = await client.query({
-      query: gql`
-      {
-        findProductsByStoreId(input: { store: "${String(
-          dataStore.findStore._id
-        )}" }) {
+
+        findProducts(input: {product: {store: {slug: "${String(slug)}"}}}) {
           products {
             _id
             name
             description
             status
             brand
+            slug
             category {
               _id
               name
@@ -160,7 +154,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
               quantity
               picture {
                 url
-                filename
               }
             }
           }
@@ -171,9 +164,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
     return {
       props: {
-        store: dataStore.findStore,
-        products: dataProducts.findProductsByStoreId.products,
-        paginate: dataProducts.findProductsByStoreId
+        store: data.findStore,
+        products: data.findProducts.products,
+        paginate: data.findProducts
       }
     }
   } catch {

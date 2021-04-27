@@ -22,7 +22,6 @@ interface DetailsProductProps {
       slug: string
       profile_picture: {
         url: string
-        filename: string
       }
       status: string
     }
@@ -36,7 +35,6 @@ interface DetailsProductProps {
       quantity: number
       picture: {
         url: string
-        filename: string
       }
     }[]
   }
@@ -50,7 +48,6 @@ interface DetailsProductProps {
     quantity: number
     picture: {
       url: string
-      filename: string
     }
   }
   setVariant: Dispatch<
@@ -64,7 +61,6 @@ interface DetailsProductProps {
       quantity: number
       picture: {
         url: string
-        filename: string
       }
     }>
   >
@@ -86,63 +82,69 @@ export const DetailsProduct = ({
 
         <main>
           <div>
-            <img
-              src={variant.picture.url}
-              alt={`Foto do produto: ${product.name}`}
-            />
-          </div>
-          <div>
-            <h2>
-              Vendido por{' '}
-              <Link href={`/store/${product.store.slug}`}>
-                <a>{product.store.name}</a>
-              </Link>
-            </h2>
-            <p>{product.brand}</p>
-            <form action="#">
-              <Select
-                label="Tamanho"
-                items={sizes}
-                value={variant.size}
-                onChange={e => {
-                  setVariant(
-                    product.variants.find(
-                      variant => variant.size == String(e.target.value)
-                    )
-                  )
-                }}
+            <div>
+              <img
+                src={variant.picture.url}
+                alt={`Foto do produto: ${product.name}`}
               />
-
-              <Select
-                label="Sabor"
-                items={flavors}
-                value={variant.flavor}
-                onChange={e => {
-                  setVariant(
-                    product.variants.find(
-                      variant =>
-                        variant.flavor === String(e.target.value) &&
-                        variant.size === variant.size
-                    )
-                  )
-                }}
-              />
-            </form>
-            <div className="details">
-              <p>{variant.quantity} disponíveis</p>
-              {variant.promotion ? (
-                <>
-                  <h3>De: {formatCurrency(variant.price)}</h3>
-                  <h2>Por: {formatCurrency(variant.promotion)}</h2>
-                </>
-              ) : (
-                <h2>{formatCurrency(variant.price)}</h2>
-              )}
             </div>
             <div>
-              <button>Adicionar ao carrinho</button>
-              <button>Comprar</button>
+              <h2>
+                Vendido por{' '}
+                <Link href={`/store/${product.store.slug}`}>
+                  <a>{product.store.name}</a>
+                </Link>
+              </h2>
+              <p>{product.brand}</p>
+              <form action="#">
+                <Select
+                  label="Tamanho"
+                  items={sizes}
+                  value={variant.size}
+                  onChange={e => {
+                    setVariant(
+                      product.variants.find(
+                        variant => variant.size == String(e.target.value)
+                      )
+                    )
+                  }}
+                />
+
+                <Select
+                  label="Sabor"
+                  items={flavors}
+                  value={variant.flavor}
+                  onChange={e => {
+                    setVariant(
+                      product.variants.find(
+                        variant =>
+                          variant.flavor === String(e.target.value) &&
+                          variant.size === variant.size
+                      )
+                    )
+                  }}
+                />
+              </form>
+              <div className="details">
+                <p>{variant.quantity} disponíveis</p>
+                {variant.promotion ? (
+                  <>
+                    <h3>De: {formatCurrency(variant.price)}</h3>
+                    <h2>Por: {formatCurrency(variant.promotion)}</h2>
+                  </>
+                ) : (
+                  <h2>{formatCurrency(variant.price)}</h2>
+                )}
+              </div>
+              <div>
+                <button>Adicionar ao carrinho</button>
+                <button>Comprar</button>
+              </div>
             </div>
+          </div>
+          <div>
+            <h1>Descrição</h1>
+            <p>{product.description}</p>
           </div>
         </main>
       </Content>

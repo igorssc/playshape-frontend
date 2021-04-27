@@ -10,6 +10,7 @@ interface ProductCatalogProps {
     description: string
     status: string
     brand: string
+    slug: string
     category: {
       _id: string
       name: string
@@ -36,7 +37,6 @@ interface ProductCatalogProps {
       quantity: string
       picture: {
         url: string
-        filename: string
       }
     }[]
   }[]

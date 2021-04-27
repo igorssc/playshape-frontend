@@ -12,7 +12,6 @@ export const Content = styled.div`
   > main {
     > div {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
     }
 
     footer {
@@ -26,5 +25,29 @@ export const Content = styled.div`
   > h1 {
     text-align: center;
     font-size: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    > main {
+      > div {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+
+  @media (max-width: 576px) {
+    > main {
+      > div {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  @media (min-width: 768px) {
+    > main {
+      > div {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
   }
 `

@@ -25,7 +25,6 @@ interface ProductPageProps {
       slug: string
       profile_picture: {
         url: string
-        filename: string
       }
       status: string
     }
@@ -39,7 +38,6 @@ interface ProductPageProps {
       quantity: number
       picture: {
         url: string
-        filename: string
       }
     }[]
   }
@@ -49,6 +47,7 @@ interface ProductPageProps {
     description: string
     status: string
     brand: string
+    slug: string
     category: {
       _id: string
       name: string
@@ -75,7 +74,6 @@ interface ProductPageProps {
       quantity: string
       picture: {
         url: string
-        filename: string
       }
     }[]
   }[]
@@ -89,17 +87,17 @@ const ProductPage: NextPage = ({
     ProductPageProps['product']['variants'][0]
   >(product.variants[0])
 
+  useEffect(() => {
+    setVariant(product.variants[0])
+  }, [product])
+
   const sizes = product.variants
     .map(variant => variant.size)
     .filter((value, index, product) => product.indexOf(value) === index)
 
   const flavors = product.variants
-    .filter(variant => variant.size === variant.size)
+    .filter(Cvariant => Cvariant.size === variant.size)
     .map(variant => variant.flavor)
-
-  useEffect(() => {
-    setVariant(product.variants[0])
-  }, [product])
 
   return (
     <>
@@ -122,13 +120,13 @@ const ProductPage: NextPage = ({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const { id } = params
+  const { slug } = params
 
   try {
     const { data: dataProduct } = await client.query({
       query: gql`
       {
-        findProduct(input: {_id: "${id}"}) {
+        findProduct(input: {slug: "${slug}"}) {
           _id
           name
           description
@@ -145,7 +143,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
             slug
             profile_picture {
               url
-              filename
             }
             status
           }
@@ -159,7 +156,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
             quantity
             picture {
               url
-              filename
             }
           }
         }
@@ -170,15 +166,16 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const { data: dataRelatedProducts } = await client.query({
       query: gql`
       {
-        findProductsByStoreId(input: { store: "${String(
-          dataProduct.findProduct.store._id
-        )}", limit: 4}) {
+        findProductsRelated(input: {_id: "${String(
+          dataProduct.findProduct._id
+        )}", limit: 4}){
           products {
             _id
             name
             description
             status
             brand
+            slug
             category {
               _id
               name
@@ -205,7 +202,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
               quantity
               picture {
                 url
-                filename
               }
             }
           }
@@ -217,7 +213,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     return {
       props: {
         product: dataProduct.findProduct,
-        relatedProducts: dataRelatedProducts.findProductsByStoreId.products
+        relatedProducts: dataRelatedProducts.findProductsRelated.products
       }
     }
   } catch {

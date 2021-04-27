@@ -18,117 +18,132 @@ export const Content = styled.div`
 
   main {
     padding-top: 2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-
-    > div {
-      display: flex;
-      align-items: center;
-    }
 
     > div:nth-child(1) {
-      justify-content: center;
-    }
+      display: grid;
+      grid-template-columns: 1fr 1fr;
 
-    > div:nth-child(2) {
-      flex-direction: column;
-      justify-content: space-around;
+      > div {
+        display: flex;
+        align-items: center;
+      }
 
-      > h2 {
-        font-size: 0.9rem;
+      > div:nth-child(1) {
+        justify-content: center;
+      }
 
-        > a {
-          transition: all 0.2s;
+      > div:nth-child(2) {
+        flex-direction: column;
+        justify-content: space-around;
 
-          &:hover {
+        > h2 {
+          font-size: 0.9rem;
+
+          > a {
+            transition: all 0.2s;
+
+            &:hover {
+              color: ${theme('mode', {
+                light: colors.yellowLight,
+                dark: colors.grayLight
+              })};
+            }
+          }
+        }
+
+        > p {
+          font-size: 1rem;
+        }
+
+        form {
+          display: flex;
+          flex-direction: column;
+          width: 350px;
+          max-width: 90%;
+          color: white;
+
+          > div {
+            margin-top: 1.5rem;
+          }
+
+          .MuiSelect-root {
+            font-size: 0.8rem;
+          }
+        }
+
+        .details {
+          text-align: center;
+
+          h3 {
+            text-decoration: line-through;
+            margin: 0.5rem auto;
+          }
+
+          h2 {
+            margin: 0.5rem auto;
+            font-weight: bold;
+          }
+        }
+
+        > div:last-child {
+          display: flex;
+          flex-direction: column;
+
+          button {
+            padding: 0.4rem 4rem;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+          }
+
+          button:first-child {
+            background: ${theme('mode', {
+              light: colors.grayDarker,
+              dark: colors.grayDark
+            })};
+
             color: ${theme('mode', {
+              light: colors.grayLighter,
+              dark: colors.grayLighter
+            })};
+
+            &:hover {
+              filter: ${theme('mode', {
+                light: 'brightness(1.3)',
+                dark: 'brightness(0.9);'
+              })};
+            }
+          }
+
+          button:last-child {
+            margin-top: 1rem;
+            font-weight: 500;
+
+            background: ${theme('mode', {
               light: colors.yellowLight,
               dark: colors.grayLight
             })};
-          }
-        }
-      }
 
-      > p {
-        font-size: 1rem;
-      }
-
-      form {
-        display: flex;
-        flex-direction: column;
-        width: 350px;
-        max-width: 90%;
-        color: white;
-
-        > div {
-          margin-top: 1.5rem;
-        }
-
-        .MuiSelect-root {
-          font-size: 0.8rem;
-        }
-      }
-
-      .details {
-        text-align: center;
-
-        h3 {
-          text-decoration: line-through;
-          margin: 0.5rem auto;
-        }
-
-        h2 {
-          margin: 0.5rem auto;
-          font-weight: bold;
-        }
-      }
-
-      > div:last-child {
-        display: flex;
-        flex-direction: column;
-
-        button {
-          padding: 0.4rem 4rem;
-          border: 1px solid transparent;
-          transition: all 0.2s;
-        }
-
-        button:first-child {
-          background: ${theme('mode', {
-            light: colors.grayDarker,
-            dark: colors.grayDark
-          })};
-
-          color: ${theme('mode', {
-            light: colors.grayLighter,
-            dark: colors.grayLighter
-          })};
-
-          &:hover {
-            filter: ${theme('mode', {
-              light: 'brightness(1.3)',
-              dark: 'brightness(0.9);'
+            color: ${theme('mode', {
+              light: colors.grayDarker,
+              dark: colors.grayDarker
             })};
+
+            &:hover {
+              filter: brightness(0.9);
+            }
           }
         }
+      }
+    }
 
-        button:last-child {
-          margin-top: 1rem;
+    > div:nth-child(2) {
+      > h1 {
+        font-size: 1.5rem;
+        margin: 3rem auto 2rem auto;
+      }
 
-          background: ${theme('mode', {
-            light: colors.yellowLight,
-            dark: colors.grayLight
-          })};
-
-          color: ${theme('mode', {
-            light: colors.grayDarker,
-            dark: colors.grayDarker
-          })};
-
-          &:hover {
-            filter: brightness(0.9);
-          }
-        }
+      p {
+        text-align: justify;
       }
     }
   }

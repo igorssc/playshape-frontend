@@ -9,6 +9,7 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   margin: auto;
+  padding: 0 0.3rem;
   display: flex;
   height: 100%;
   flex-direction: column;
@@ -36,7 +37,7 @@ export const Content = styled.div`
 
       &:hover {
         color: ${theme('mode', {
-          light: colors.grayDark,
+          light: colors.grayDarker,
           dark: colors.grayLight
         })};
       }
@@ -49,6 +50,14 @@ export const Content = styled.div`
 
     a {
       font-weight: bold;
+      transition: 0.2s;
+
+      &:hover {
+        color: ${theme('mode', {
+          light: colors.grayDark,
+          dark: colors.grayLight
+        })};
+      }
     }
   }
 

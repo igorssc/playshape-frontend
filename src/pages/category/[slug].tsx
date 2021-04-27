@@ -1,11 +1,11 @@
 import gql from 'graphql-tag'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-import { ReactNode, useEffect, useState } from 'react'
-import { ProductCatalog } from '../components/ProductCatalog/ProductCatalog'
-import { client } from '../services/api'
+import { ReactNode, useState } from 'react'
+import { ProductCatalog } from '../../components/ProductCatalog/ProductCatalog'
+import { client } from '../../services/api'
 
-interface SearchPageProps {
+interface CategoryPageProps {
   children: ReactNode
   search: string
   products: {
@@ -55,31 +55,31 @@ interface SearchPageProps {
     prevPage: number
     nextPage: number
   }
+  category: {
+    name: string
+    description: string
+  }
 }
 
-const SearchPage: NextPage = ({
+const CategoryPage: NextPage = ({
   products,
   paginate,
-  search
-}: SearchPageProps) => {
+  search,
+  category
+}: CategoryPageProps) => {
   const [productsState, setProductsState] = useState<
-    SearchPageProps['products']
+    CategoryPageProps['products']
   >(products)
 
   const [paginateState, setPaginateState] = useState<
-    SearchPageProps['paginate']
+    CategoryPageProps['paginate']
   >(paginate)
-
-  useEffect(() => {
-    setProductsState(products)
-    setPaginateState(paginate)
-  }, [products])
 
   const handlePaginate = async (searchPage: number) => {
     const { data } = await client.query({
       query: gql`
-      {
-        searchProducts(input: {value: "${search}", limit: 4,page: ${searchPage}}){
+       {
+        findProducts(input: {product: {category: {slug: "${search}"}}, limit: 4,page: ${searchPage}}){
           products {
             _id
             name
@@ -130,8 +130,8 @@ const SearchPage: NextPage = ({
     `
     })
 
-    setPaginateState(data.searchProducts)
-    setProductsState(data.searchProducts.products)
+    setPaginateState(data.findProducts)
+    setProductsState(data.findProducts.products)
   }
 
   return (
@@ -140,7 +140,7 @@ const SearchPage: NextPage = ({
         <title>{search} | Playshape</title>
       </Head>
       <ProductCatalog
-        title={`Resultado da pesquisa para: ${search}`}
+        title={`Resultado da categoria: ${category.name}`}
         products={productsState}
         paginate={paginateState}
         handlePaginate={handlePaginate}
@@ -149,11 +149,15 @@ const SearchPage: NextPage = ({
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const { slug } = params
+
   const { data } = await client.query({
     query: gql`
-      {
-        searchProducts(input: {value: "${query.q}", limit: 4}) {
+      query FindStore {
+        findProducts(input: {product: {category: {slug: "${String(
+          slug
+        )}"}},limit: 4}) {
           products {
             _id
             name
@@ -200,17 +204,23 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
           prevPage
           nextPage
         }
+
+        findCategory(input: {slug: "${String(slug)}"}) {
+          name
+          description
+        }
       }
     `
   })
 
   return {
     props: {
-      search: String(query.q),
-      products: data.searchProducts.products,
-      paginate: data.searchProducts
+      search: String(slug),
+      products: data.findProducts.products,
+      paginate: data.findProducts,
+      category: data.findCategory
     }
   }
 }
 
-export default SearchPage
+export default CategoryPage

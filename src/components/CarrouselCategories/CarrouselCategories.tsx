@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
@@ -12,6 +13,7 @@ interface CarrouselCategoriesProps {
   categories: {
     _id: string
     name: string
+    slug: string
   }[]
 }
 
@@ -87,11 +89,15 @@ export const CarrouselCategories = ({
       <Content>
         <Slider {...settings}>
           {categories.map(category => (
-            <Ball key={category._id}>
-              <div>
-                <h3>{category.name}</h3>
-              </div>
-            </Ball>
+            <Link href={`/category/${category.slug}`} key={category._id}>
+              <a>
+                <Ball>
+                  <div>
+                    <h3>{category.name}</h3>
+                  </div>
+                </Ball>
+              </a>
+            </Link>
           ))}
         </Slider>
       </Content>

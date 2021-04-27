@@ -7,6 +7,7 @@ import {
 } from '@apollo/client'
 
 const httpLink = new HttpLink({
+  // uri: 'http://localhost:3333/graphql/'
   uri: 'https://playshape.herokuapp.com/graphql/'
 })
 

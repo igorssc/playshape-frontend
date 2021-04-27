@@ -9,6 +9,7 @@ interface ProductGroupProps {
     description: string
     status: string
     brand: string
+    slug: string
     category: {
       _id: string
       name: string
@@ -35,7 +36,6 @@ interface ProductGroupProps {
       quantity: string
       picture: {
         url: string
-        filename: string
       }
     }[]
   }
@@ -46,7 +46,7 @@ export const ProductGroup = ({ product }: ProductGroupProps) => {
     <Container>
       <Content>
         <img src={product.variants[0].picture.url} alt={product.name} />
-        <Link href={`/product/${product._id}`}>
+        <Link href={`/product/${product.slug}`}>
           <a className="name">
             <h1>{product.name}</h1>
           </a>
@@ -71,7 +71,7 @@ export const ProductGroup = ({ product }: ProductGroupProps) => {
             ? `${product.description.substr(0, 100)}...`
             : product.description}
         </p>
-        <Link href={`/product/${product._id}`}>
+        <Link href={`/product/${product.slug}`}>
           <a type="button">Detalhes</a>
         </Link>
       </Content>

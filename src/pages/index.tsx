@@ -7,12 +7,12 @@ import { InitialMessage } from '../components/InitialMessage/InitialMessage'
 import { ProductCatalog } from '../components/ProductCatalog/ProductCatalog'
 import { SubscribeNewsletter } from '../components/SubscribeNewsletter/SubscribeNewsletter'
 import { client } from '../services/api'
-import { Container } from '../styles/pages/Home'
 
 interface IndexPageProps {
   children: ReactNode
   categories: {
     _id: string
+    slug: string
     name: string
   }[]
   products: {
@@ -21,6 +21,7 @@ interface IndexPageProps {
     description: string
     status: string
     brand: string
+    slug: string
     category: {
       _id: string
       name: string
@@ -47,7 +48,6 @@ interface IndexPageProps {
       quantity: string
       picture: {
         url: string
-        filename: string
       }
     }[]
   }[]
@@ -55,7 +55,7 @@ interface IndexPageProps {
 
 const IndexPage: NextPage = (props: IndexPageProps) => {
   return (
-    <Container>
+    <>
       <Head>
         <title>Home | Playshape</title>
       </Head>
@@ -66,7 +66,7 @@ const IndexPage: NextPage = (props: IndexPageProps) => {
         products={props.products}
       />
       <SubscribeNewsletter />
-    </Container>
+    </>
   )
 }
 
@@ -81,6 +81,7 @@ export const getStaticProps: GetStaticProps = async () => {
             description
             status
             brand
+            slug
             category {
               _id
               name
@@ -107,7 +108,6 @@ export const getStaticProps: GetStaticProps = async () => {
               quantity
               picture {
                 url
-                filename
               }
             }
           }
@@ -117,6 +117,7 @@ export const getStaticProps: GetStaticProps = async () => {
           categories {
             _id
             name
+            slug
           }
         }
       }
