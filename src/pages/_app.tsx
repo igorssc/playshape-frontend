@@ -1,4 +1,3 @@
-import ScrollTop from '@nzambello/react-scrolltop'
 import PageNProgress from 'next-styled-nprogress'
 import { AppProps } from 'next/app'
 import React, { useEffect, useState } from 'react'
@@ -44,9 +43,6 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
       />
       <div style={{ position: 'absolute', right: 0 }}>
         <Switch checked={theme === 'dark'} handleChange={handleTheme} />
-      </div>
-      <div>
-        <ScrollTop />
       </div>
       <Header />
       <Component {...pageProps} theme={theme} setTheme={setTheme} />

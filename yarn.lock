@@ -332,11 +332,6 @@
   resolved "https://registry.yarnpkg.com/@next/react-refresh-utils/-/react-refresh-utils-10.1.3.tgz#65b3e1b9846c02452787fde1d54ad9c54b506dbd"
   integrity sha512-P4GJZuLKfD/o42JvGZ/xP4Hxg68vd3NeZxOLqIuQKFjjaYgC2IrO+lE5PTwGmRkytjfprJC+9j7Jss/xQAS6QA==
 
-"@nzambello/react-scrolltop@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@nzambello/react-scrolltop/-/react-scrolltop-0.1.2.tgz#f306b8e759b76a2f6670730daa589965ba6b41f7"
-  integrity sha512-rFXh/y/nzTIsGYEy+hu5OZd+XmvrgykbaBePXg2D6a7PZ2eoTyZXCOvuK2CrAwqnOJ25QyR+kHReeMnnjCq78Q==
-
 "@opentelemetry/api@0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@opentelemetry/api/-/api-0.14.0.tgz#4e17d8d2f1da72b19374efa7b6526aa001267cae"
