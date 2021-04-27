@@ -33,18 +33,12 @@ export const Content = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-    }
 
-    input {
-      padding: 0.5rem;
-      width: 40%;
-      max-width: 400px;
-      border: none;
-      outline-color: ${colors.grayLight};
-    }
-
-    input + input {
-      margin-left: 1.5rem;
+      input {
+        padding: 0.5rem;
+        border: none;
+        outline-color: ${colors.grayLight};
+      }
     }
 
     button {
@@ -58,8 +52,8 @@ export const Content = styled.div`
       })};
       border: none;
       padding: 0.7rem;
-      width: 40%;
-      max-width: 800px;
+      width: 420px;
+      max-width: 90%;
       margin-top: 2rem;
 
       &:hover {
@@ -67,6 +61,37 @@ export const Content = styled.div`
           light: 'brightness(2)',
           dark: 'brightness(0.8)'
         })};
+      }
+    }
+  }
+
+  @media (max-width: 576px) {
+    form {
+      > div {
+        input {
+          width: 90%;
+        }
+
+        input + input {
+          margin-top: 1rem;
+        }
+
+        flex-direction: column;
+      }
+    }
+  }
+
+  @media (min-width: 576px) {
+    form {
+      > div {
+        input {
+          width: 420px;
+          max-width: calc((90% / 2) - 0.25rem);
+        }
+
+        input + input {
+          margin-left: 1.5rem;
+        }
       }
     }
   }

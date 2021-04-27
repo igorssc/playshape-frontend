@@ -7,11 +7,10 @@ export const Container = styled.div`
 export const Content = styled.div`
   max-width: 1120px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+
   margin: auto;
 
   img {
-    width: 90%;
     margin: auto;
   }
 
@@ -26,6 +25,31 @@ export const Content = styled.div`
       line-height: 2rem;
       margin-top: 1.5rem;
       text-align: center;
+    }
+  }
+
+  @media (max-width: 920px) {
+    grid-template-columns: 1fr;
+
+    img {
+      width: 500px;
+      max-width: 80%;
+    }
+
+    h1 {
+      margin-top: 2rem;
+    }
+  }
+
+  @media (min-width: 920px) {
+    grid-template-columns: repeat(2, 1fr);
+
+    img {
+      width: 90%;
+    }
+
+    h1 {
+      margin-top: 2rem;
     }
   }
 `

@@ -7,7 +7,6 @@ export const Container = styled.div`
     position: relative;
     color: ${colors.grayDark};
     display: grid;
-    grid-template-columns: 4fr 1fr;
     gap: 1rem;
 
     input {
@@ -38,6 +37,20 @@ export const Container = styled.div`
       position: absolute;
       top: 12px;
       left: 15px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    width: 100%;
+
+    form {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (min-width: 576px) {
+    form {
+      grid-template-columns: 4fr 1fr;
     }
   }
 `

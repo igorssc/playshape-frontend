@@ -34,4 +34,16 @@ export const Content = styled.div`
     margin-bottom: 30px;
     cursor: pointer;
   }
+
+  @media (max-width: 576px) {
+    padding: 40px 2rem;
+
+    h1 {
+      text-align: center;
+    }
+
+    h2 {
+      text-align: center;
+    }
+  }
 `

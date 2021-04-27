@@ -19,7 +19,8 @@ export const Content = styled.div`
   flex-direction: column;
 
   img {
-    margin-bottom: 1rem;
+    margin: 0 auto 1rem auto;
+    max-width: 90%;
   }
 
   p {
@@ -29,5 +30,17 @@ export const Content = styled.div`
       dark: colors.grayLighter
     })};
     font-size: 0.7rem;
+  }
+
+  @media (max-width: 1120px) {
+    p {
+      margin: auto 1.5rem;
+    }
+  }
+
+  @media (min-width: 1120px) {
+    p {
+      margin: auto;
+    }
   }
 `
