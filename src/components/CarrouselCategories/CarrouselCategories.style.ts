@@ -11,6 +11,7 @@ export const SampleArrow = styled.div`
 `
 
 export const Container = styled.div`
+  transition: all 0.2s;
   margin: 0 auto 3rem auto;
   padding: 0 1.7rem;
   max-width: 1120px;

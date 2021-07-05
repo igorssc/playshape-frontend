@@ -24,6 +24,7 @@ export const Container = styled.div<ContainerType>`
   justify-content: center;
   border-radius: 100%;
   opacity: ${props => (props.visible ? 1 : 0)};
+  transition: all 0.2s;
 
   &:hover {
     filter: brightness(0.8);

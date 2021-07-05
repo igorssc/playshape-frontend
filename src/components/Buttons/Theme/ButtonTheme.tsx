@@ -15,7 +15,10 @@ export const ButtonTheme: React.FC<ButtonThemeProps> = props => {
 
   return (
     <Container>
-      <Switch checked={theme === 'dark'} handleChange={handleTheme} />
+      <Switch
+        checked={(theme as { mode: string }).mode === 'dark'}
+        handleChange={handleTheme}
+      />
     </Container>
   )
 }

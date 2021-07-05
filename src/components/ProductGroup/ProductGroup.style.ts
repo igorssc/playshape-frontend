@@ -29,6 +29,7 @@ export const Content = styled.div`
       font-size: 1rem;
       font-weight: 500;
       cursor: pointer;
+      transition: all 0.2s;
       color: ${theme('mode', {
         light: colors.grayDarker,
         dark: colors.grayLight
@@ -49,6 +50,7 @@ export const Content = styled.div`
 
     a {
       font-weight: bold;
+      transition: all 0.2s;
 
       &:hover {
         color: ${theme('mode', {
@@ -71,6 +73,7 @@ export const Content = styled.div`
       light: colors.yellowLight,
       dark: colors.grayLighter
     })};
+    transition: all 0.2s;
   }
 
   h4 {
@@ -93,6 +96,7 @@ export const Content = styled.div`
       light: colors.white,
       dark: colors.grayLighter
     })};
+    transition: all 0.2s;
     padding: 0.7rem;
     width: 80%;
     cursor: pointer;

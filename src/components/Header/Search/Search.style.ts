@@ -23,6 +23,7 @@ export const Container = styled.div`
       padding: 10px 30px;
       color: ${colors.white};
       border-radius: 3px;
+      transition: all 0.2s;
 
       &:hover {
         filter: ${theme('mode', {
