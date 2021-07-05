@@ -38,8 +38,6 @@ export const Content = styled.div`
           font-size: 0.9rem;
 
           > a {
-            transition: all 0.2s;
-
             &:hover {
               color: ${theme('mode', {
                 light: colors.yellowLight,
@@ -90,7 +88,6 @@ export const Content = styled.div`
           button {
             padding: 0.4rem 4rem;
             border: 1px solid transparent;
-            transition: all 0.2s;
           }
 
           button:first-child {

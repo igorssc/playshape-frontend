@@ -8,6 +8,7 @@ export const GlobalStyle = createGlobalStyle`
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  transition: all 0.2s;
 
   ::-webkit-scrollbar-track {
     background-color: ${theme('mode', {
@@ -53,7 +54,6 @@ body {
     light: colors.black,
     dark: colors.grayLighter
   })};
-  transition: all 0.2s;
 }
 
 body,

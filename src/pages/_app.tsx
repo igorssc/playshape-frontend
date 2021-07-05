@@ -5,13 +5,13 @@ import { ThemeProvider } from 'styled-components'
 import Styledtheme from 'styled-theming'
 import { Footer } from '../components/Footer/Footer'
 import { Header } from '../components/Header/Header'
+import { Menu } from '../components/Menu/Menu'
 import { ScrollTop } from '../components/ScrollTop/ScrollTop'
-import { Switch } from '../components/Switch/Switch'
 import colors from '../styles/colors'
 import { GlobalStyle } from '../styles/global'
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
-  const [theme, setTheme] = useState<string>('light')
+  const [theme, setTheme] = useState('light')
 
   useEffect(() => {
     const theme = localStorage.getItem('theme')
@@ -23,11 +23,14 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
     }
   }, [])
 
-  const handleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light'
-
-    setTheme(newTheme)
-    localStorage.setItem('theme', newTheme)
+  function handleTheme() {
+    if (theme === 'light') {
+      setTheme('dark')
+      localStorage.setItem('theme', 'dark')
+    } else {
+      setTheme('light')
+      localStorage.setItem('theme', 'light')
+    }
   }
 
   return (
@@ -42,11 +45,9 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
         height="5px"
         delay={200}
       />
-      <div style={{ position: 'absolute', right: 0 }}>
-        <Switch checked={theme === 'dark'} handleChange={handleTheme} />
-      </div>
       <Header />
-      <Component {...pageProps} theme={theme} setTheme={setTheme} />
+      <Menu handleTheme={handleTheme} />
+      <Component {...pageProps} />
       <Footer />
       <ScrollTop />
     </ThemeProvider>

@@ -8,7 +8,7 @@ type ContainerType = {
 
 export const Container = styled.div<ContainerType>`
   position: fixed;
-
+  cursor: pointer;
   background: ${theme('mode', {
     light: colors.grayDark,
     dark: colors.grayLight
@@ -23,7 +23,6 @@ export const Container = styled.div<ContainerType>`
   align-items: center;
   justify-content: center;
   border-radius: 100%;
-  transition: all 0.2s;
   opacity: ${props => (props.visible ? 1 : 0)};
 
   &:hover {
