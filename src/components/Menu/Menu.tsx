@@ -13,7 +13,7 @@ export const Menu: React.FC<MenuProps> = props => {
           <ButtonTheme handleTheme={props.handleTheme} />
         </ul>
         <ul>
-          <li>Login</li>
+          <li>Entrar</li>
         </ul>
       </Content>
     </Container>

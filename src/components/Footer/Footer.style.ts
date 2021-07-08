@@ -1,11 +1,12 @@
+import { lighten } from 'polished'
 import styled from 'styled-components'
 import theme from 'styled-theming'
-import colors from '../../styles/colors'
+import colors from '../../styles/Colors'
 
 export const Container = styled.div`
   background: ${theme('mode', {
     light: colors.grayDarker,
-    dark: colors.grayDarker
+    dark: lighten(0.02, colors.grayDarker)
   })};
 `
 

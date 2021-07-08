@@ -7,8 +7,8 @@ import { Footer } from '../components/Footer/Footer'
 import { Header } from '../components/Header/Header'
 import { Menu } from '../components/Menu/Menu'
 import { ScrollTop } from '../components/ScrollTop/ScrollTop'
-import colors from '../styles/colors'
-import { GlobalStyle } from '../styles/global'
+import colors from '../styles/Colors'
+import { GlobalStyle } from '../styles/Global'
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const [theme, setTheme] = useState('light')

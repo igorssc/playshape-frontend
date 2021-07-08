@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import theme from 'styled-theming'
-import colors from '../../styles/colors'
+import colors from '../../styles/Colors'
 
 type ContainerType = {
   visible: boolean
