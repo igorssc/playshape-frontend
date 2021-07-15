@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { ButtonTheme } from '../Buttons/Theme/ButtonTheme'
 import { Container, Content } from './Menu.style'
 
@@ -13,7 +14,11 @@ export const Menu: React.FC<MenuProps> = props => {
           <ButtonTheme handleTheme={props.handleTheme} />
         </ul>
         <ul>
-          <li>Entrar</li>
+          <li>
+            <Link href="./login">
+              <a>Entrar</a>
+            </Link>
+          </li>
         </ul>
       </Content>
     </Container>
