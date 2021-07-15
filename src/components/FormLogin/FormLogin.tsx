@@ -5,7 +5,7 @@ export const FormLogin: React.FC = () => {
     <Container>
       <h2>Já sou cliente</h2>
       <form action="#">
-        <label htmlFor="cpf">Email</label>
+        <label htmlFor="email">Email</label>
         <input type="text" name="email" />
         <label htmlFor="pass">Senha</label>
         <input type="text" name="pass" />

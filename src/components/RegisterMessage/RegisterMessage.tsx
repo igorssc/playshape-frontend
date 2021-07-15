@@ -1,17 +1,17 @@
 import Link from 'next/link'
 import React from 'react'
-import { Container } from './LoginMessage.style'
+import { Container } from './RegisterMessage.style'
 
-export const LoginMessage: React.FC = () => {
+export const RegisterMessage: React.FC = () => {
   return (
     <Container>
       <img
         src="./images/Fitness_Monochromatic.svg"
         alt="Fitness Monochromatic"
       />
-      <h2>Novo por aqui? Crie sua conta</h2>
-      <Link href="/register">
-        <a>Criar conta</a>
+      <h2>Já possui conta? Faça seu login</h2>
+      <Link href="/login">
+        <a>Fazer login</a>
       </Link>
     </Container>
   )
