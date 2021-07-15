@@ -31,4 +31,10 @@ export const Container = styled.div`
       filter: brightness(0.95);
     }
   }
+
+  @media (max-width: 768px) {
+    img {
+      max-width: 100%;
+    }
+  }
 `

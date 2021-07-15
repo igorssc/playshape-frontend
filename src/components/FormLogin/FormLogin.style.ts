@@ -68,5 +68,14 @@ export const Container = styled.div`
     }
 
     margin-bottom: 50px;
+
+    form {
+      width: 100%;
+
+      input,
+      button {
+        width: 100%;
+      }
+    }
   }
 `

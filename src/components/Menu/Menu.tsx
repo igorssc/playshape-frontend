@@ -15,7 +15,7 @@ export const Menu: React.FC<MenuProps> = props => {
         </ul>
         <ul>
           <li>
-            <Link href="./login">
+            <Link href="/login">
               <a>Entrar</a>
             </Link>
           </li>
