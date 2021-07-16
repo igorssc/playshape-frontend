@@ -67,13 +67,11 @@ const CategoryPage: NextPage = ({
   search,
   category
 }: CategoryPageProps) => {
-  const [productsState, setProductsState] = useState<
-    CategoryPageProps['products']
-  >(products)
+  const [productsState, setProductsState] =
+    useState<CategoryPageProps['products']>(products)
 
-  const [paginateState, setPaginateState] = useState<
-    CategoryPageProps['paginate']
-  >(paginate)
+  const [paginateState, setPaginateState] =
+    useState<CategoryPageProps['paginate']>(paginate)
 
   const handlePaginate = async (searchPage: number) => {
     const { data } = await client.query({
@@ -149,8 +147,8 @@ const CategoryPage: NextPage = ({
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const { slug } = params
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const { slug } = ctx.params
 
   const { data } = await client.query({
     query: gql`
@@ -210,7 +208,8 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
           description
         }
       }
-    `
+    `,
+    context: { nextContext: ctx }
   })
 
   return {

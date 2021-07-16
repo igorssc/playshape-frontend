@@ -7,8 +7,17 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
 
+  #alert {
+    width: 100%;
+    display: none;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
   form {
-    margin-top: 40px;
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
 
@@ -17,6 +26,7 @@ export const Container = styled.div`
     }
 
     input {
+      padding-left: 10px;
       margin-bottom: 10px;
       border: none;
       height: 2rem;

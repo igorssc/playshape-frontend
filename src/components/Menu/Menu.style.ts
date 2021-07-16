@@ -13,6 +13,7 @@ export const Container = styled.div`
 export const Content = styled.div`
   width: 100%;
   max-width: 1120px;
+  height: 50px;
   margin: auto;
   display: flex;
   flex-direction: row;
@@ -21,10 +22,16 @@ export const Content = styled.div`
 
   ul {
     li {
+      height: 50px;
       list-style: none;
-      padding: 0.4rem;
+      padding: 0 0.4rem;
       cursor: pointer;
       border-bottom: 2px solid transparent;
+      line-height: 50px;
+
+      button {
+        height: 50px;
+      }
 
       &:hover {
         border-color: ${theme('mode', {

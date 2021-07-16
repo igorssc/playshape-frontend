@@ -1,9 +1,10 @@
+import { Avatar } from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton'
 import MenuComponent from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import AccountCircle from '@material-ui/icons/AccountCircle'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { AuthContext } from '../../contexts/AuthContext'
 import { ButtonTheme } from '../Buttons/Theme/ButtonTheme'
 import { Container, Content } from './Menu.style'
 
@@ -21,7 +22,12 @@ export const Menu: React.FC<MenuProps> = props => {
     setAnchorEl(null)
   }
 
-  const auth = false
+  const { isAuthenticated, user, singOut } = useContext(AuthContext)
+
+  const handleExit = () => {
+    handleClose()
+    singOut()
+  }
 
   return (
     <Container>
@@ -30,7 +36,7 @@ export const Menu: React.FC<MenuProps> = props => {
           <ButtonTheme handleTheme={props.handleTheme} />
         </ul>
         <ul>
-          {!auth ? (
+          {!isAuthenticated ? (
             <li>
               <Link href="/login">
                 <a>Entrar</a>
@@ -45,7 +51,10 @@ export const Menu: React.FC<MenuProps> = props => {
                 onClick={handleMenu}
                 color="inherit"
               >
-                <AccountCircle />
+                <Avatar
+                  alt={user.name}
+                  src={user.profile_picture?.url}
+                ></Avatar>
               </IconButton>
               <MenuComponent
                 id="menu-appbar"
@@ -62,8 +71,10 @@ export const Menu: React.FC<MenuProps> = props => {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Link href="/profile">Meu perfil</Link>
+                </MenuItem>
+                <MenuItem onClick={handleExit}>Sair</MenuItem>
               </MenuComponent>
             </li>
           )}
