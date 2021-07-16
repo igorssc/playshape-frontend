@@ -9,6 +9,12 @@ type SignInData = {
   password: string
 }
 
+type RegisterData = {
+  name: string
+  email: string
+  password: string
+}
+
 type User = {
   _id: string
   name: string
@@ -40,6 +46,7 @@ type AuthContextType = {
   user: User
   signIn: (data: SignInData) => Promise<void>
   singOut: () => void
+  register: (data: RegisterData) => Promise<void>
 }
 
 export const AuthContext = createContext({} as AuthContextType)
@@ -91,6 +98,20 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     reloadUser()
   }, [])
+
+  async function register({ name, email, password }: RegisterData) {
+    await client.mutate({
+      mutation: gql`
+        mutation {
+          createUser(input: { name: "${name}", email: "${email}", password: "${password}" }) {
+            _id
+          }
+        }
+      `
+    })
+
+    Router.push('/login')
+  }
 
   async function signIn({ email, password }: SignInData) {
     const { data } = await client.query({
@@ -148,7 +169,9 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, signIn, singOut }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, user, signIn, singOut, register }}
+    >
       {children}
     </AuthContext.Provider>
   )

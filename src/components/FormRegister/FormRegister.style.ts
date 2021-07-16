@@ -7,13 +7,23 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
 
+  #alert {
+    width: 100%;
+    display: none;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
   form {
-    margin-top: 40px;
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
 
     label {
       margin-bottom: 5px;
+      font-size: 0.85rem;
     }
 
     input {

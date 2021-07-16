@@ -23,6 +23,11 @@ export const Container = styled.div`
 
     label {
       margin-bottom: 5px;
+      font-size: 0.85rem;
+    }
+
+    h3 {
+      font-size: 0.95rem;
     }
 
     input {
