@@ -2,6 +2,7 @@ import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
 import { useContext } from 'react'
+import { FormProfile } from '../../components/FormProfile/FormProfile'
 import { AuthContext } from '../../contexts/AuthContext'
 import { Container } from '../../styles/pages/Login'
 
@@ -14,7 +15,7 @@ const IndexProfile: NextPage = () => {
         <title>Perfil | Playshape</title>
       </Head>
       {console.log(user)}
-      {user?.name}
+      <FormProfile />
     </Container>
   )
 }

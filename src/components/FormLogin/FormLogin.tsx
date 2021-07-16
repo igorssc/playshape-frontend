@@ -1,4 +1,5 @@
 import Alert from '@material-ui/lab/Alert'
+import { signIn as signInFromGoogle } from 'next-auth/client'
 import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { AuthContext } from '../../contexts/AuthContext'
@@ -35,11 +36,11 @@ export const FormLogin: React.FC = () => {
         />
         <h3>Esqueceu a senha?</h3>
         <button type="submit">Entrar</button>
-        <button>
-          <img src="./images/1200px-Google__G__Logo.png" alt="Logo Google" />{' '}
-          &nbsp; Entrar com o Google
-        </button>
       </form>
+      <button onClick={() => signInFromGoogle('google')}>
+        <img src="./images/1200px-Google__G__Logo.png" alt="Logo Google" />{' '}
+        &nbsp; Entrar com o Google
+      </button>
       <h3>Área de loja</h3>
     </Container>
   )

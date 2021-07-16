@@ -1,3 +1,4 @@
+import { Provider } from 'next-auth/client'
 import PageNProgress from 'next-styled-nprogress'
 import { AppProps } from 'next/app'
 import React, { useEffect, useState } from 'react'
@@ -36,23 +37,25 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
 
   return (
     <AuthProvider>
-      <ThemeProvider theme={{ mode: theme }}>
-        <GlobalStyle />
-        <PageNProgress
-          color={Styledtheme('mode', {
-            light: colors.grayDarker,
-            dark: colors.yellowLight
-          })}
-          showSpinner={false}
-          height="5px"
-          delay={200}
-        />
-        <Header />
-        <Menu handleTheme={handleTheme} />
-        <Component {...pageProps} />
-        <Footer />
-        <ScrollTop />
-      </ThemeProvider>
+      <Provider session={pageProps.session}>
+        <ThemeProvider theme={{ mode: theme }}>
+          <GlobalStyle />
+          <PageNProgress
+            color={Styledtheme('mode', {
+              light: colors.grayDarker,
+              dark: colors.yellowLight
+            })}
+            showSpinner={false}
+            height="5px"
+            delay={200}
+          />
+          <Header />
+          <Menu handleTheme={handleTheme} />
+          <Component {...pageProps} />
+          <Footer />
+          <ScrollTop />
+        </ThemeProvider>
+      </Provider>
     </AuthProvider>
   )
 }

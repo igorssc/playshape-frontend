@@ -43,11 +43,6 @@ export const Container = styled.div`
     }
 
     button {
-      margin: 10px 0;
-      width: 400px;
-      padding: 10px;
-      border: none;
-      transition: all 0.2s;
       background: ${theme('mode', {
         light: colors.yellowLight,
         dark: colors.grayDark
@@ -56,20 +51,25 @@ export const Container = styled.div`
         light: colors.black,
         dark: colors.grayLighter
       })};
+    }
+  }
 
-      &:hover {
-        filter: brightness(0.9);
-      }
+  button {
+    background: #fff;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    color: ${colors.grayDarker};
+    margin: 10px 0;
+    width: 400px;
+    padding: 10px;
+    border: none;
+    transition: all 0.2s;
+
+    &:hover {
+      filter: brightness(0.9);
     }
 
-    button + button {
-      background: #fff;
-      box-shadow: 0px 4px 4px 0px #00000040;
-      color: ${colors.grayDarker};
-
-      img {
-        width: 15px;
-      }
+    img {
+      width: 15px;
     }
   }
 

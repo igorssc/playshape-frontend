@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client'
 import { GetStaticProps, NextPage } from 'next'
+import { useSession } from 'next-auth/client'
 import Head from 'next/head'
 import { ReactNode } from 'react'
 import { CarrouselCategories } from '../components/CarrouselCategories/CarrouselCategories'
@@ -54,11 +55,13 @@ interface IndexPageProps {
 }
 
 const IndexPage: NextPage = (props: IndexPageProps) => {
+  const [session, loading] = useSession()
   return (
     <>
       <Head>
         <title>Home | Playshape</title>
       </Head>
+      {console.log(session)}
       <InitialMessage />
       <CarrouselCategories categories={props.categories} />
       <ProductCatalog

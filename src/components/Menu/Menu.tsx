@@ -52,8 +52,8 @@ export const Menu: React.FC<MenuProps> = props => {
                 color="inherit"
               >
                 <Avatar
-                  alt={user.name}
-                  src={user.profile_picture?.url}
+                  alt={user?.name}
+                  src={user?.profile_picture?.url}
                 ></Avatar>
               </IconButton>
               <MenuComponent
