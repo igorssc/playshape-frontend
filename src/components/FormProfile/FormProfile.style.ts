@@ -12,8 +12,12 @@ export const Content = styled.div`
   form {
     width: 100%;
 
+    h2 {
+      margin-left: 10px;
+    }
+
     > button {
-      margin: 1rem auto;
+      margin: 1rem 0 1rem 10px;
       background: ${theme('mode', {
         light: colors.grayDarker,
         dark: colors.grayDark
@@ -47,6 +51,7 @@ export const Content = styled.div`
       border: none;
 
       p.remove-address {
+        margin-left: 10px;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -64,6 +69,7 @@ export const Content = styled.div`
 
     p.add-address {
       margin-top: 15px;
+      margin-left: 10px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -125,11 +131,11 @@ export const Content = styled.div`
     }
 
     p.remove-address {
-      margin-left: 10px;
+      margin-left: 30px;
     }
 
     p.add-address {
-      margin-left: 30px;
+      margin-left: 30px !important;
     }
   }
 `
