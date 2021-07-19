@@ -14,7 +14,7 @@ export const FormLogin: React.FC = () => {
       await signIn(data)
     } catch (error) {
       document.getElementById('alert').style.display = 'flex'
-      document.getElementById('alert-message').innerHTML = error
+      document.getElementById('alert-message').innerHTML = error.message
     }
   }
 

@@ -1,85 +1,175 @@
-import { Avatar } from '@material-ui/core'
-import { useContext, useState } from 'react'
+import ControlPointIcon from '@material-ui/icons/ControlPoint'
+import HighlightOffIcon from '@material-ui/icons/HighlightOff'
+import { useSnackbar } from 'notistack'
+import { FocusEvent, useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AuthContext } from '../../contexts/AuthContext'
+import { formatCpf, formatPhone } from '../../utils/format'
 import { Container, Content } from './FormProfile.style'
 
 export const FormProfile: React.FC = () => {
   const { register, handleSubmit } = useForm()
-  const [indexes, setIndexes] = useState([])
-  const [counter, setCounter] = useState(0)
 
-  const { user } = useContext(AuthContext)
+  const { enqueueSnackbar } = useSnackbar()
 
-  async function getAddressData(event, fieldName) {
+  const { user, updateUser } = useContext(AuthContext)
+
+  const [cpfMask, setCpfMask] = useState('')
+  const [phoneMask, setPhoneMask] = useState('')
+
+  type AddressExampleType = {
+    zipCode?: string
+    street?: string
+    number?: number
+    neighborhood?: string
+    city?: string
+    state?: string
+    lat?: string
+    lng?: string
+  }
+
+  const addressExample: AddressExampleType = {
+    zipCode: '',
+    street: '',
+    number: null,
+    neighborhood: '',
+    city: '',
+    state: '',
+    lat: '0',
+    lng: '0'
+  }
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    cpf: '',
+    phone: '',
+    address: [{ ...addressExample }]
+  })
+
+  useEffect(() => {
+    setFormData({
+      name: user?.name,
+      email: user?.email,
+      cpf: user?.cpf ?? '',
+      phone: user?.phone ?? '',
+      address: user?.address
+    })
+
+    setCpfMask(formatCpf(user?.cpf ?? ''))
+  }, [user])
+
+  async function getAddressData(
+    event: FocusEvent<HTMLInputElement>,
+    index: number
+  ) {
     const zipCode = event.target.value
+
+    const updateAddressForm = (index: number, newElement: any) => {
+      setFormData({
+        ...formData,
+        address: formData.address.map((element, indexElement) =>
+          indexElement !== index ? element : { ...element, ...newElement }
+        )
+      })
+    }
 
     if (zipCode) {
       try {
-        const street = document.querySelector(
-          `[name='${fieldName}.street']`
-        ) as HTMLInputElement
-
-        const number = document.querySelector(
-          `[name='${fieldName}.number']`
-        ) as HTMLInputElement
-
-        const neighborhood = document.querySelector(
-          `[name='${fieldName}.neighborhood']`
-        ) as HTMLInputElement
-
-        const city = document.querySelector(
-          `[name='${fieldName}.city']`
-        ) as HTMLInputElement
-
-        const state = document.querySelector(
-          `[name='${fieldName}.state']`
-        ) as HTMLInputElement
-
-        street.value = '...'
-        neighborhood.value = '...'
-        city.value = '...'
+        updateAddressForm(index, {
+          street: '...',
+          city: '...',
+          neighborhood: '...'
+        })
 
         await fetch(`http://viacep.com.br/ws/${event.target.value}/json/`, {
           mode: 'cors'
         })
-          .then(res => res.json())
+          .then(async res => res.json())
           .then(data => {
-            street.value = data.logradouro
-            neighborhood.value = data.bairro
-            city.value = data.localidade
-            state.value = data.uf
+            updateAddressForm(index, {
+              street: data.logradouro,
+              city: data.localidade,
+              neighborhood: data.bairro,
+              state: data.uf
+            })
+          })
+          .catch(() => {
+            enqueueSnackbar('CEP inválido', {
+              variant: 'error'
+            })
+            updateAddressForm(index, { street: '', city: '', neighborhood: '' })
 
-            street.focus()
-            neighborhood.focus()
-            city.focus()
-            state.focus()
-            number.focus()
+            document
+              .querySelector(`input[name="address[${index}].zipCode"]`)
+              // @ts-ignore: Unreachable code error
+              .focus()
           })
       } catch (error) {
-        console.log(error)
+        enqueueSnackbar(error.message, {
+          variant: 'error'
+        })
+
+        updateAddressForm(index, { street: '', city: '', neighborhood: '' })
       }
     }
   }
 
   const addAddress = () => {
-    setIndexes(prevIndexes => [...prevIndexes, counter])
-    setCounter(prevCounter => prevCounter + 1)
+    setFormData({
+      ...formData,
+      address: [
+        ...formData.address,
+        {
+          zipCode: '',
+          street: '',
+          number: null,
+          neighborhood: '',
+          city: '',
+          state: '',
+          lat: '0',
+          lng: '0'
+        }
+      ]
+    })
   }
 
-  const removeAddress = index => () => {
-    setIndexes(prevIndexes => [...prevIndexes.filter(item => item !== index)])
-    setCounter(prevCounter => prevCounter - 1)
+  const removeAddress = (index: number) => {
+    setFormData({
+      ...formData,
+      address: formData.address.filter(
+        (_, indexFilter) => indexFilter !== index
+      )
+    })
+    enqueueSnackbar('Endereço removido', {
+      variant: 'error'
+    })
   }
 
-  async function handleUpdateUser(data) {
+  async function handleUpdateUser() {
     try {
-      console.log('tudo certo', data)
+      await updateUser(formData)
     } catch (error) {
-      console.log('erro', error)
-      // document.getElementById('alert').style.display = 'flex'
-      // document.getElementById('alert-message').innerHTML = error
+      enqueueSnackbar(error.message, {
+        variant: 'error'
+      })
     }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function changeInput(
+    newElement: any,
+    element: AddressExampleType,
+    index: number
+  ) {
+    const newAddress = { ...element, ...newElement }
+    setFormData({
+      ...formData,
+      address: formData.address.map((valueElement, indexElement) =>
+        indexElement !== index ? valueElement : newAddress
+      )
+    })
   }
 
   return (
@@ -87,30 +177,71 @@ export const FormProfile: React.FC = () => {
       <Content>
         <div>
           <div>
-            <Avatar alt={user?.name} src={user?.profile_picture?.url}></Avatar>
+            {/* <Avatar alt={user?.name} src={user?.profile_picture?.url}></Avatar> */}
           </div>
         </div>
         <form onSubmit={handleSubmit(handleUpdateUser)}>
           <div>
             <div>
               <label htmlFor="name">Nome</label>
-              <input {...register('name')} type="text" name="name" />
+              <input
+                {...register('name')}
+                type="text"
+                name="name"
+                onChange={event => {
+                  const value = event.target.value
+                  setFormData({ ...formData, name: value })
+                }}
+                value={formData.name}
+              />
             </div>
             <div>
               <label htmlFor="email">Email</label>
-              <input {...register('email')} type="text" name="email" />
+              <input
+                {...register('email')}
+                type="text"
+                name="email"
+                onChange={event => {
+                  const value = event.target.value
+                  setFormData({ ...formData, email: value })
+                }}
+                value={formData.email}
+              />
             </div>
             <div>
               <label htmlFor="cpf">CPF</label>
-              <input {...register('cpf')} type="text" name="cpf" />
+              <input
+                {...register('cpf')}
+                type="text"
+                name="cpf"
+                // @ts-ignore: Unreachable code error
+                maxLength="14"
+                onChange={event => {
+                  const value = event.target.value.replace(/[^a-z0-9]/gi, '')
+                  setFormData({ ...formData, cpf: value })
+                  setCpfMask(formatCpf(value))
+                }}
+                value={cpfMask}
+              />
             </div>
             <div>
               <label htmlFor="phone">Telefone</label>
-              <input {...register('phone')} type="text" name="phone" />
+              <input
+                {...register('phone')}
+                type="text"
+                name="phone"
+                onChange={event => {
+                  const value = event.target.value.replace(/[^a-z0-9]/gi, '')
+                  setFormData({ ...formData, phone: value })
+                  setPhoneMask(formatPhone(value))
+                }}
+                value={phoneMask}
+              />
             </div>
           </div>
           <h2>Endereço</h2>
-          {indexes.map(index => {
+
+          {formData.address?.map((element, index) => {
             const fieldName = `address[${index}]`
 
             return (
@@ -119,41 +250,85 @@ export const FormProfile: React.FC = () => {
                   <label htmlFor={`${fieldName}.zipCode`}>CEP</label>
                   <input
                     {...register(`${fieldName}.zipCode`)}
+                    required
                     type="text"
-                    onBlur={event => getAddressData(event, fieldName)}
+                    onBlur={event => {
+                      getAddressData(event, index).then()
+                    }}
                     name={`${fieldName}.zipCode`}
+                    onChange={event =>
+                      changeInput(
+                        { zipCode: event.target.value },
+                        element,
+                        index
+                      )
+                    }
+                    value={formData.address[index].zipCode}
                   />
                 </div>
                 <div>
                   <label htmlFor={`${fieldName}.street`}>Endereço</label>
                   <input
                     {...register(`${fieldName}.street`)}
+                    required
                     type="text"
                     name={`${fieldName}.street`}
+                    onChange={event =>
+                      changeInput(
+                        { street: event.target.value },
+                        element,
+                        index
+                      )
+                    }
+                    value={formData.address[index].street}
                   />
                 </div>
                 <div>
                   <label htmlFor={`${fieldName}.number`}>Número</label>
                   <input
                     {...register(`${fieldName}.number`)}
+                    required
                     type="number"
                     name={`${fieldName}.number`}
+                    onBlur={async () => {}}
+                    onChange={event =>
+                      changeInput(
+                        { number: event.target.value },
+                        element,
+                        index
+                      )
+                    }
+                    value={formData.address[index].number}
                   />
                 </div>
                 <div>
                   <label htmlFor={`${fieldName}.neighborhood`}>Bairro</label>
                   <input
                     {...register(`${fieldName}.neighborhood`)}
+                    required
                     type="text"
                     name={`${fieldName}.neighborhood`}
+                    onChange={event =>
+                      changeInput(
+                        { neighborhood: event.target.value },
+                        element,
+                        index
+                      )
+                    }
+                    value={formData.address[index].neighborhood}
                   />
                 </div>
                 <div>
                   <label htmlFor={`${fieldName}.city`}>Cidade</label>
                   <input
                     {...register(`${fieldName}.city`)}
+                    required
                     type="text"
                     name={`${fieldName}.city`}
+                    onChange={event =>
+                      changeInput({ city: event.target.value }, element, index)
+                    }
+                    value={formData.address[index].city}
                   />
                 </div>
                 <div>
@@ -161,8 +336,11 @@ export const FormProfile: React.FC = () => {
                   <select
                     {...register(`${fieldName}.state`)}
                     required
-                    defaultValue="MG"
                     name={`${fieldName}.state`}
+                    onChange={event =>
+                      changeInput({ state: event.target.value }, element, index)
+                    }
+                    value={formData.address[index].state}
                   >
                     <option value="AC">Acre</option>
                     <option value="AL">Alagoas</option>
@@ -193,15 +371,20 @@ export const FormProfile: React.FC = () => {
                     <option value="TO">Tocantins</option>
                   </select>
                 </div>
-                <button type="button" onClick={removeAddress(index)}>
-                  Remove
-                </button>
+                <p
+                  className="remove-address"
+                  onClick={() => removeAddress(index)}
+                >
+                  <HighlightOffIcon color="secondary" />
+                  &nbsp;Remover endereço
+                </p>
               </fieldset>
             )
           })}
-          <button type="button" onClick={addAddress}>
-            Adicionar novo endereço
-          </button>
+          <p className="add-address" onClick={addAddress}>
+            <ControlPointIcon />
+            &nbsp;Adicionar novo endereço
+          </p>
           <button type="submit">Salvar alterações</button>
         </form>
       </Content>

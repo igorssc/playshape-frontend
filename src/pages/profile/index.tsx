@@ -4,19 +4,17 @@ import { parseCookies } from 'nookies'
 import { useContext } from 'react'
 import { FormProfile } from '../../components/FormProfile/FormProfile'
 import { AuthContext } from '../../contexts/AuthContext'
-import { Container } from '../../styles/pages/Login'
 
 const IndexProfile: NextPage = () => {
   const { user } = useContext(AuthContext)
 
   return (
-    <Container>
+    <>
       <Head>
         <title>Perfil | Playshape</title>
       </Head>
-      {console.log(user)}
       <FormProfile />
-    </Container>
+    </>
   )
 }
 

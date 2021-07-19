@@ -1,6 +1,8 @@
+import Slide from '@material-ui/core/Slide'
 import { Provider } from 'next-auth/client'
 import PageNProgress from 'next-styled-nprogress'
 import { AppProps } from 'next/app'
+import { SnackbarProvider } from 'notistack'
 import React, { useEffect, useState } from 'react'
 import { ThemeProvider } from 'styled-components'
 import Styledtheme from 'styled-theming'
@@ -36,27 +38,36 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   }
 
   return (
-    <AuthProvider>
-      <Provider session={pageProps.session}>
-        <ThemeProvider theme={{ mode: theme }}>
-          <GlobalStyle />
-          <PageNProgress
-            color={Styledtheme('mode', {
-              light: colors.grayDarker,
-              dark: colors.yellowLight
-            })}
-            showSpinner={false}
-            height="5px"
-            delay={200}
-          />
-          <Header />
-          <Menu handleTheme={handleTheme} />
-          <Component {...pageProps} />
-          <Footer />
-          <ScrollTop />
-        </ThemeProvider>
-      </Provider>
-    </AuthProvider>
+    <SnackbarProvider
+      maxSnack={3}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right'
+      }}
+      TransitionComponent={Slide}
+    >
+      <AuthProvider>
+        <Provider session={pageProps.session}>
+          <ThemeProvider theme={{ mode: theme }}>
+            <GlobalStyle />
+            <PageNProgress
+              color={Styledtheme('mode', {
+                light: colors.grayDarker,
+                dark: colors.yellowLight
+              })}
+              showSpinner={false}
+              height="5px"
+              delay={200}
+            />
+            <Header />
+            <Menu handleTheme={handleTheme} />
+            <Component {...pageProps} />
+            <Footer />
+            <ScrollTop />
+          </ThemeProvider>
+        </Provider>
+      </AuthProvider>
+    </SnackbarProvider>
   )
 }
 

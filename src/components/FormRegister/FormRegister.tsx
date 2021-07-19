@@ -23,7 +23,7 @@ export const FormRegister: React.FC = () => {
       await registerUser({ name, email, password })
     } catch (error) {
       document.getElementById('alert').style.display = 'flex'
-      document.getElementById('alert-message').innerHTML = error
+      document.getElementById('alert-message').innerHTML = error.message
     }
   }
 

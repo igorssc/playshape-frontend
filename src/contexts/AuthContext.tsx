@@ -1,8 +1,12 @@
 import { gql } from '@apollo/client'
+import cloneDeep from 'clone-deep'
 import Router from 'next/router'
 import { destroyCookie, parseCookies, setCookie } from 'nookies'
+import { useSnackbar } from 'notistack'
+import omitDeep from 'omit-deep'
 import { createContext, useEffect, useState } from 'react'
 import { client } from '../services/api'
+import { generateLngLat } from '../utils/lng-lat'
 
 type SignInData = {
   email: string
@@ -13,6 +17,25 @@ type RegisterData = {
   name: string
   email: string
   password: string
+}
+
+type UpdateUserData = {
+  name: string
+  email: string
+  cpf?: string
+  phone?: string
+  address?: {
+    street?: string
+    number?: number
+    neighborhood?: string
+    city?: string
+    state?: string
+    zipCode?: string
+  }[]
+  profile_picture?: {
+    url: string
+    filename: string
+  }
 }
 
 type User = {
@@ -47,12 +70,17 @@ type AuthContextType = {
   signIn: (data: SignInData) => Promise<void>
   singOut: () => void
   register: (data: RegisterData) => Promise<void>
+  updateUser: (data: UpdateUserData) => Promise<void>
 }
 
 export const AuthContext = createContext({} as AuthContextType)
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState<User | null>(null)
+
+  const { enqueueSnackbar } = useSnackbar()
+
+  const allowedCities = ['Belo Horizonte']
 
   const isAuthenticated = !!user
 
@@ -76,6 +104,8 @@ export function AuthProvider({ children }) {
                 city
                 state
                 zipCode
+                lat
+                lng
               }
               profile_picture {
                 url
@@ -110,6 +140,10 @@ export function AuthProvider({ children }) {
       `
     })
 
+    enqueueSnackbar('Usuário cadastrado com sucesso', {
+      variant: 'success'
+    })
+
     Router.push('/login')
   }
 
@@ -133,6 +167,8 @@ export function AuthProvider({ children }) {
                 city
                 state
                 zipCode
+                lat
+                lng
               }
               profile_picture {
                 url
@@ -160,6 +196,117 @@ export function AuthProvider({ children }) {
     Router.push('/profile')
   }
 
+  async function updateUser(data: UpdateUserData) {
+    const dataFiltered = await omitDeep(
+      cloneDeep({
+        ...data,
+        address: await Promise.all(
+          data.address.map(async element => {
+            let lat = 0
+            let lng = 0
+
+            try {
+              const { lat: latitude, lng: longitude } = await generateLngLat(
+                element
+              )
+
+              lat = latitude
+              lng = longitude
+
+              const isAllowedCity = allowedCities.some(
+                city => city === element.city
+              )
+
+              if (!isAllowedCity) {
+                throw new Error('error city')
+              }
+            } catch (error) {
+              console.log(error.message)
+              if (error.message === 'error city') {
+                enqueueSnackbar(
+                  'Atendemos somente à cidade de Belo Horizonte',
+                  {
+                    variant: 'error'
+                  }
+                )
+              } else {
+                enqueueSnackbar('Endereço inválido', {
+                  variant: 'error'
+                })
+              }
+
+              return false
+            }
+
+            if (element.number) {
+              return {
+                ...element,
+                number: Number(element.number),
+                lat: String(lat),
+                lng: String(lng)
+              }
+            } else {
+              return {
+                ...element,
+                number: null,
+                lat: String(lat),
+                lng: String(lng)
+              }
+            }
+          })
+        )
+      }),
+      '__typename'
+    )
+
+    if (dataFiltered.address[0]) {
+      const { data: dataResponse } = await client.mutate({
+        mutation: gql`
+          mutation ($data: UpdateUserInput!) {
+            updateUser(input: $data) {
+              _id
+              name
+              email
+              cpf
+              phone
+              address {
+                street
+                number
+                neighborhood
+                city
+                state
+                zipCode
+                lat
+                lng
+              }
+              profile_picture {
+                url
+                filename
+              }
+              isAdmin
+              created_at
+              updated_at
+              last_login
+              status
+              permissions
+            }
+          }
+        `,
+        variables: {
+          data: dataFiltered
+        }
+      })
+
+      setUser(dataResponse.updateUser)
+
+      enqueueSnackbar('Dados atualizados com sucesso', {
+        variant: 'success'
+      })
+    } else {
+      return
+    }
+  }
+
   function singOut() {
     destroyCookie(undefined, 'playshape.token')
 
@@ -170,7 +317,7 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user, signIn, singOut, register }}
+      value={{ isAuthenticated, user, signIn, singOut, register, updateUser }}
     >
       {children}
     </AuthContext.Provider>

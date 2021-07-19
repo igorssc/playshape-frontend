@@ -2,10 +2,10 @@ import gql from 'graphql-tag'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import { ReactNode, useEffect, useState } from 'react'
-import { ProductCatalog } from '../components/ProductCatalog/ProductCatalog'
-import { client } from '../services/api'
+import { ProductCatalog } from '../../components/ProductCatalog/ProductCatalog'
+import { client } from '../../services/api'
 
-interface SearchPageProps {
+interface IndexSearchProps {
   children: ReactNode
   search: string
   products: {
@@ -57,18 +57,16 @@ interface SearchPageProps {
   }
 }
 
-const SearchPage: NextPage = ({
+const IndexSearch: NextPage = ({
   products,
   paginate,
   search
-}: SearchPageProps) => {
-  const [productsState, setProductsState] = useState<
-    SearchPageProps['products']
-  >(products)
+}: IndexSearchProps) => {
+  const [productsState, setProductsState] =
+    useState<IndexSearchProps['products']>(products)
 
-  const [paginateState, setPaginateState] = useState<
-    SearchPageProps['paginate']
-  >(paginate)
+  const [paginateState, setPaginateState] =
+    useState<IndexSearchProps['paginate']>(paginate)
 
   useEffect(() => {
     setProductsState(products)
@@ -213,4 +211,4 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   }
 }
 
-export default SearchPage
+export default IndexSearch

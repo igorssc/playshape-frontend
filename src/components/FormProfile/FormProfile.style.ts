@@ -1,20 +1,56 @@
 import styled from 'styled-components'
 import theme from 'styled-theming'
-import Colors from '../../styles/Colors'
+import colors from '../../styles/Colors'
 
 export const Container = styled.div``
 
 export const Content = styled.div`
   width: 100%;
   max-width: 1120px;
+  margin: 15px auto;
 
   form {
     width: 100%;
+
+    > button {
+      margin: 1rem auto;
+      background: ${theme('mode', {
+        light: colors.grayDarker,
+        dark: colors.grayDark
+      })};
+      color: ${theme('mode', {
+        light: colors.white,
+        dark: colors.grayLighter
+      })};
+      transition: all 0.2s;
+      padding: 0.7rem;
+      width: 300px;
+      max-width: 90%;
+      cursor: pointer;
+      border: none;
+
+      &:hover {
+        filter: ${theme('mode', {
+          light: 'brightness(1.5)',
+          dark: 'brightness(0.8)'
+        })};
+      }
+    }
+
+    button + button {
+      margin-left: 2rem;
+    }
 
     > div,
     > fieldset {
       display: grid;
       border: none;
+
+      p.remove-address {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+      }
 
       > div {
         margin: 10px;
@@ -24,6 +60,13 @@ export const Content = styled.div`
           margin-bottom: 0.5rem;
         }
       }
+    }
+
+    p.add-address {
+      margin-top: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
     }
 
     > div:nth-child(1) {
@@ -43,8 +86,38 @@ export const Content = styled.div`
       height: 2rem;
       background: ${theme('mode', {
         light: '#eee',
-        dark: Colors.grayDark
+        dark: colors.grayDark
       })};
+    }
+  }
+
+  @media (max-width: 768px) {
+    form {
+      > fieldset.address {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+
+  @media (max-width: 576px) {
+    form {
+      > div:nth-child(1) {
+        grid-template-columns: 1fr;
+      }
+
+      > fieldset.address {
+        grid-template-columns: 1fr;
+      }
+
+      > button {
+        display: block;
+        margin: 1rem auto;
+      }
+    }
+
+    p.remove-address,
+    p.add-address {
+      margin-left: 10px;
     }
   }
 `
