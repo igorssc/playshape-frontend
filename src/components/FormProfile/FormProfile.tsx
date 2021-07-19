@@ -239,7 +239,7 @@ export const FormProfile: React.FC = () => {
               />
             </div>
           </div>
-          <h2>Endereço</h2>
+          <h2>Endereços</h2>
 
           {formData.address?.map((element, index) => {
             const fieldName = `address[${index}]`

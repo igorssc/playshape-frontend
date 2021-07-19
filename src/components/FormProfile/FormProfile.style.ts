@@ -101,6 +101,10 @@ export const Content = styled.div`
 
   @media (max-width: 576px) {
     form {
+      h2 {
+        margin-left: 30px;
+      }
+
       > div:nth-child(1) {
         grid-template-columns: 1fr;
       }
@@ -113,11 +117,19 @@ export const Content = styled.div`
         display: block;
         margin: 1rem auto;
       }
+
+      > div,
+      > fieldset {
+        margin: 20px;
+      }
     }
 
-    p.remove-address,
-    p.add-address {
+    p.remove-address {
       margin-left: 10px;
+    }
+
+    p.add-address {
+      margin-left: 30px;
     }
   }
 `
