@@ -1,21 +1,26 @@
 import Alert from '@material-ui/lab/Alert'
 import { signIn as signInFromGoogle } from 'next-auth/client'
-import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
-import { AuthContext } from '../../contexts/AuthContext'
+import { useAuth } from '../../hooks/UseAuth'
+import { useBackdrop } from '../../hooks/UseBackdrop'
 import { Container } from './FormLogin.style'
 
 export const FormLogin: React.FC = () => {
   const { register, handleSubmit } = useForm()
-  const { signIn } = useContext(AuthContext)
+  const { signIn } = useAuth()
 
-  async function handleSignIn(data) {
+  const { handleOpen: handleOpenBackdrop, handleClose: handleCloseBackdrop } =
+    useBackdrop()
+
+  async function handleSignIn(data: { email: string; password: string }) {
     try {
+      handleOpenBackdrop()
       await signIn(data)
     } catch (error) {
       document.getElementById('alert').style.display = 'flex'
       document.getElementById('alert-message').innerHTML = error.message
     }
+    handleCloseBackdrop()
   }
 
   return (

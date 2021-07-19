@@ -4,7 +4,7 @@ import Router from 'next/router'
 import { destroyCookie, parseCookies, setCookie } from 'nookies'
 import { useSnackbar } from 'notistack'
 import omitDeep from 'omit-deep'
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { client } from '../services/api'
 import { generateLngLat } from '../utils/lng-lat'
 
@@ -221,7 +221,6 @@ export function AuthProvider({ children }) {
                 throw new Error('error city')
               }
             } catch (error) {
-              console.log(error.message)
               if (error.message === 'error city') {
                 enqueueSnackbar(
                   'Atendemos somente à cidade de Belo Horizonte',
@@ -322,4 +321,10 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   )
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext)
+
+  return context
 }

@@ -61,7 +61,6 @@ const IndexPage: NextPage = (props: IndexPageProps) => {
       <Head>
         <title>Home | Playshape</title>
       </Head>
-      {console.log(session)}
       <InitialMessage />
       <CarrouselCategories categories={props.categories} />
       <ProductCatalog

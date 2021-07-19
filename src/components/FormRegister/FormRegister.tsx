@@ -1,12 +1,11 @@
 import Alert from '@material-ui/lab/Alert'
-import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
-import { AuthContext } from '../../contexts/AuthContext'
+import { useAuth } from '../../hooks/UseAuth'
 import { Container } from './FormRegister.style'
 
 export const FormRegister: React.FC = () => {
   const { register, handleSubmit } = useForm()
-  const { register: registerUser } = useContext(AuthContext)
+  const { register: registerUser } = useAuth()
 
   async function handleSignIn({ name, email, password, confirmPassword }) {
     try {

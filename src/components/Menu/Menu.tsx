@@ -3,8 +3,8 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuComponent from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import Link from 'next/link'
-import { useContext, useState } from 'react'
-import { AuthContext } from '../../contexts/AuthContext'
+import { useState } from 'react'
+import { useAuth } from '../../hooks/UseAuth'
 import { ButtonTheme } from '../Buttons/Theme/ButtonTheme'
 import { Container, Content } from './Menu.style'
 
@@ -22,7 +22,7 @@ export const Menu: React.FC<MenuProps> = props => {
     setAnchorEl(null)
   }
 
-  const { isAuthenticated, user, singOut } = useContext(AuthContext)
+  const { isAuthenticated, user, singOut } = useAuth()
 
   const handleExit = () => {
     handleClose()

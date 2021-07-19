@@ -1,9 +1,10 @@
 import ControlPointIcon from '@material-ui/icons/ControlPoint'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 import { useSnackbar } from 'notistack'
-import { FocusEvent, useContext, useEffect, useState } from 'react'
+import { FocusEvent, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { AuthContext } from '../../contexts/AuthContext'
+import { useAuth } from '../../hooks/UseAuth'
+import { useBackdrop } from '../../hooks/UseBackdrop'
 import { formatCpf, formatPhone } from '../../utils/format'
 import { Container, Content } from './FormProfile.style'
 
@@ -12,10 +13,13 @@ export const FormProfile: React.FC = () => {
 
   const { enqueueSnackbar } = useSnackbar()
 
-  const { user, updateUser } = useContext(AuthContext)
+  const { user, updateUser } = useAuth()
 
   const [cpfMask, setCpfMask] = useState('')
   const [phoneMask, setPhoneMask] = useState('')
+
+  const { handleOpen: handleOpenBackdrop, handleClose: handleCloseBackdrop } =
+    useBackdrop()
 
   type AddressExampleType = {
     zipCode?: string
@@ -148,12 +152,15 @@ export const FormProfile: React.FC = () => {
 
   async function handleUpdateUser() {
     try {
+      handleOpenBackdrop()
       await updateUser(formData)
     } catch (error) {
       enqueueSnackbar(error.message, {
         variant: 'error'
       })
     }
+
+    handleCloseBackdrop()
 
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }

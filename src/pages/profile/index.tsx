@@ -1,12 +1,11 @@
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
-import { useContext } from 'react'
 import { FormProfile } from '../../components/FormProfile/FormProfile'
-import { AuthContext } from '../../contexts/AuthContext'
+import { useAuth } from '../../hooks/UseAuth'
 
 const IndexProfile: NextPage = () => {
-  const { user } = useContext(AuthContext)
+  const { user } = useAuth()
 
   return (
     <>
