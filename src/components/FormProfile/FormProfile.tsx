@@ -82,7 +82,7 @@ export const FormProfile: React.FC = () => {
           neighborhood: '...'
         })
 
-        await fetch(`http://viacep.com.br/ws/${event.target.value}/json/`, {
+        await fetch(`https://viacep.com.br/ws/${event.target.value}/json/`, {
           mode: 'cors'
         })
           .then(async res => res.json())
