@@ -90,11 +90,13 @@ export const Menu: React.FC<MenuProps> = props => {
             </>
           )}
           <li className="shoppingCart">
-            <IconButton aria-label="cart">
-              <Badge badgeContent={products.length} color="secondary">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
+            <Link href="/cart">
+              <IconButton aria-label="cart">
+                <Badge badgeContent={products.length} color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+            </Link>
           </li>
         </ul>
       </Content>

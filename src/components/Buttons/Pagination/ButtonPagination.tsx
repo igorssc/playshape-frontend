@@ -17,8 +17,10 @@ export const ButtonPagination = () => {
         count={paginate.totalPages}
         onChange={(_, page) => {
           handleOpen()
-          handlePaginate(search, page, type)
-          setTimeout(() => handleClose(), 50)
+          handlePaginate(search, page, type).then(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+            handleClose()
+          })
         }}
         showFirstButton
         showLastButton

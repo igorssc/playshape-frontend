@@ -13,48 +13,22 @@ interface CategoryPageProps {
     _id: string
     name: string
     description: string
-    status: string
     brand: string
     slug: string
-    category: {
-      _id: string
-      name: string
-      description: string
-      updated_at: string
-      created_at: string
-    }[]
     store: {
-      _id: string
       name: string
       slug: string
-      profile_picture: {
-        url: string
-      }
-      status: string
     }
     variants: {
-      _id: string
-      product: string
-      size: string
-      flavor: string
       price: string
       promotion: string
-      quantity: string
       picture: {
         url: string
       }
     }[]
   }[]
   paginate: {
-    totalDocs: number
-    limit: number
     totalPages: number
-    page: number
-    pagingCounter: number
-    hasPrevPage: boolean
-    hasNextPage: boolean
-    prevPage: number
-    nextPage: number
   }
   category: {
     name: string
