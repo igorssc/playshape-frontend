@@ -1,10 +1,13 @@
 import { Avatar } from '@material-ui/core'
+import Badge from '@material-ui/core/Badge'
 import IconButton from '@material-ui/core/IconButton'
 import MenuComponent from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useAuth } from '../../hooks/UseAuth'
+import { useShoppingCart } from '../../hooks/UseShoppingCart'
 import { ButtonTheme } from '../Buttons/Theme/ButtonTheme'
 import { Container, Content } from './Menu.style'
 
@@ -15,6 +18,7 @@ interface MenuProps {
 export const Menu: React.FC<MenuProps> = props => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
+
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
@@ -23,6 +27,8 @@ export const Menu: React.FC<MenuProps> = props => {
   }
 
   const { isAuthenticated, user, singOut } = useAuth()
+
+  const { products } = useShoppingCart()
 
   const handleExit = () => {
     handleClose()
@@ -78,6 +84,13 @@ export const Menu: React.FC<MenuProps> = props => {
               </MenuComponent>
             </li>
           )}
+          <li>
+            <IconButton aria-label="cart">
+              <Badge badgeContent={products.length} color="secondary">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+          </li>
         </ul>
       </Content>
     </Container>

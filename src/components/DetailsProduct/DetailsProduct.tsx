@@ -1,5 +1,7 @@
 import Link from 'next/link'
+import { useSnackbar } from 'notistack'
 import { Dispatch, SetStateAction } from 'react'
+import { useShoppingCart } from '../../hooks/UseShoppingCart'
 import { formatCurrency } from '../../utils/format'
 import { Select } from '../Select/Select'
 import { Container, Content } from './DetailsProduct.style'
@@ -15,6 +17,7 @@ interface DetailsProductProps {
       _id: string
       name: string
       description: string
+      slug: string
     }[]
     store: {
       _id: string
@@ -75,6 +78,9 @@ export const DetailsProduct = ({
   sizes,
   flavors
 }: DetailsProductProps) => {
+  const { addToCart } = useShoppingCart()
+  const { enqueueSnackbar } = useSnackbar()
+
   return (
     <Container>
       <Content>
@@ -137,7 +143,39 @@ export const DetailsProduct = ({
                 )}
               </div>
               <div>
-                <button>Adicionar ao carrinho</button>
+                <button
+                  onClick={() => {
+                    try {
+                      addToCart({
+                        id: product._id,
+                        idVariant: variant._id,
+                        name: product.name,
+                        description: product.description,
+                        size: variant.size,
+                        brand: product.brand,
+                        price: variant.price,
+                        promotion: variant.promotion ?? null,
+                        photoUrl: variant.picture.url,
+                        store: {
+                          name: product.store.name,
+                          slug: product.store.slug
+                        },
+                        category: product.category.map(element => {
+                          return { name: element.name, slug: element.slug }
+                        })
+                      })
+
+                      enqueueSnackbar(
+                        `${product.name} adicionado ao carrinho de compras`,
+                        { variant: 'success' }
+                      )
+                    } catch (error) {
+                      enqueueSnackbar(error.message, { variant: 'error' })
+                    }
+                  }}
+                >
+                  Adicionar ao carrinho
+                </button>
                 <button>Comprar</button>
               </div>
             </div>

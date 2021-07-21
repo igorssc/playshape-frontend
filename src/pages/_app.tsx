@@ -12,6 +12,7 @@ import { Menu } from '../components/Menu/Menu'
 import { ScrollTop } from '../components/ScrollTop/ScrollTop'
 import { AuthProvider } from '../hooks/UseAuth'
 import { BackdropProvider } from '../hooks/UseBackdrop'
+import { ShoppingCartProvider } from '../hooks/UseShoppingCart'
 import colors from '../styles/Colors'
 import { GlobalStyle } from '../styles/Global'
 
@@ -49,25 +50,27 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
         TransitionComponent={Slide}
       >
         <AuthProvider>
-          <Provider session={pageProps.session}>
-            <ThemeProvider theme={{ mode: theme }}>
-              <GlobalStyle />
-              <PageNProgress
-                color={Styledtheme('mode', {
-                  light: colors.grayDarker,
-                  dark: colors.yellowLight
-                })}
-                showSpinner={false}
-                height="5px"
-                delay={200}
-              />
-              <Header />
-              <Menu handleTheme={handleTheme} />
-              <Component {...pageProps} />
-              <Footer />
-              <ScrollTop />
-            </ThemeProvider>
-          </Provider>
+          <ShoppingCartProvider>
+            <Provider session={pageProps.session}>
+              <ThemeProvider theme={{ mode: theme }}>
+                <GlobalStyle />
+                <PageNProgress
+                  color={Styledtheme('mode', {
+                    light: colors.grayDarker,
+                    dark: colors.yellowLight
+                  })}
+                  showSpinner={false}
+                  height="5px"
+                  delay={200}
+                />
+                <Header />
+                <Menu handleTheme={handleTheme} />
+                <Component {...pageProps} />
+                <Footer />
+                <ScrollTop />
+              </ThemeProvider>
+            </Provider>
+          </ShoppingCartProvider>
         </AuthProvider>
       </SnackbarProvider>
     </BackdropProvider>

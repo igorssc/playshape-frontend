@@ -21,6 +21,8 @@ export const Content = styled.div`
   align-items: center;
 
   ul {
+    display: flex;
+
     li {
       height: 50px;
       list-style: none;
