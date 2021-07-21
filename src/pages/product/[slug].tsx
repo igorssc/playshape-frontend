@@ -18,6 +18,7 @@ interface ProductPageProps {
       _id: string
       name: string
       description: string
+      slug: string
     }[]
     store: {
       _id: string
@@ -136,6 +137,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
             _id
             name
             description
+            slug
           }
           store {
             _id
