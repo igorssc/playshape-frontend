@@ -122,40 +122,20 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         }
 
         findProducts(input: {product: {store: {slug: "${String(slug)}"}}}) {
-          products {
-            _id
+          _id
+          name
+          description
+          brand
+          slug
+          store {
             name
-            description
-            status
-            brand
             slug
-            category {
-              _id
-              name
-              description
-              updated_at
-              created_at
-            }
-            store {
-              _id
-              name
-              slug
-              profile_picture {
-                url
-              }
-              status
-            }
-            variants {
-              _id
-              product
-              size
-              flavor
-              price
-              promotion
-              quantity
-              picture {
-                url
-              }
+          }
+          variants {
+            price
+            promotion
+            picture {
+              url
             }
           }
         }

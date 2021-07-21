@@ -14,25 +14,18 @@ interface ProductPageProps {
     name: string
     description: string
     status: string
+    slug: string
     brand: string
     category: {
-      _id: string
       name: string
-      description: string
       slug: string
     }[]
     store: {
-      _id: string
       name: string
       slug: string
-      profile_picture: {
-        url: string
-      }
-      status: string
     }
     variants: {
       _id: string
-      product: string
       size: string
       flavor: string
       price: number
@@ -47,33 +40,15 @@ interface ProductPageProps {
     _id: string
     name: string
     description: string
-    status: string
     brand: string
     slug: string
-    category: {
-      _id: string
-      name: string
-      description: string
-      updated_at: string
-      created_at: string
-    }[]
     store: {
-      _id: string
       name: string
       slug: string
-      profile_picture: {
-        url: string
-      }
-      status: string
     }
     variants: {
-      _id: string
-      product: string
-      size: string
-      flavor: string
       price: string
       promotion: string
-      quantity: string
       picture: {
         url: string
       }
@@ -132,7 +107,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
           _id
           name
           description
-          status
+          slug
           brand
           category {
             _id

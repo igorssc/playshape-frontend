@@ -42,49 +42,54 @@ export const Menu: React.FC<MenuProps> = props => {
           <ButtonTheme handleTheme={props.handleTheme} />
         </ul>
         <ul>
-          {!isAuthenticated ? (
+          {!isAuthenticated && (
             <li>
               <Link href="/login">
                 <a>Entrar</a>
               </Link>
             </li>
-          ) : (
-            <li>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <Avatar
-                  alt={user?.name}
-                  src={user?.profile_picture?.url}
-                ></Avatar>
-              </IconButton>
-              <MenuComponent
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>
-                  <Link href="/profile">Meu perfil</Link>
-                </MenuItem>
-                <MenuItem onClick={handleExit}>Sair</MenuItem>
-              </MenuComponent>
-            </li>
           )}
-          <li>
+
+          {isAuthenticated && (
+            <>
+              <p>Olá, {user.name.split(' ')[0]}</p>
+              <li>
+                <IconButton
+                  color="inherit"
+                  onClick={handleMenu}
+                  aria-haspopup="true"
+                  aria-controls="menu-appbar"
+                  aria-label="account of current user"
+                >
+                  <Avatar
+                    alt={user?.name}
+                    src={user?.profile_picture?.url}
+                  ></Avatar>
+                </IconButton>
+                <MenuComponent
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}
+                  open={open}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleClose}>
+                    <Link href="/profile">Meu perfil</Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleExit}>Sair</MenuItem>
+                </MenuComponent>
+              </li>
+            </>
+          )}
+          <li className="shoppingCart">
             <IconButton aria-label="cart">
               <Badge badgeContent={products.length} color="secondary">
                 <ShoppingCartIcon />

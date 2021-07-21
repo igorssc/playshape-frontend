@@ -33,33 +33,15 @@ interface Products {
   _id: string
   name: string
   description: string
-  status: string
   brand: string
   slug: string
-  category: {
-    _id: string
-    name: string
-    description: string
-    updated_at: string
-    created_at: string
-  }[]
   store: {
-    _id: string
     name: string
     slug: string
-    profile_picture: {
-      url: string
-    }
-    status: string
   }
   variants: {
-    _id: string
-    product: string
-    size: string
-    flavor: string
     price: string
     promotion: string
-    quantity: string
     picture: {
       url: string
     }
@@ -67,15 +49,7 @@ interface Products {
 }
 
 interface Paginate {
-  totalDocs: number
-  limit: number
   totalPages: number
-  page: number
-  pagingCounter: number
-  hasPrevPage: boolean
-  hasNextPage: boolean
-  prevPage: number
-  nextPage: number
 }
 
 const PaginateContext = createContext<PaginateContextData>(
@@ -102,47 +76,21 @@ export function PaginateProvider({ children }: PaginateProviderProps) {
             _id
             name
             description
-            status
             brand
             slug
-            category {
-              _id
-              name
-              description
-              updated_at
-              created_at
-            }
             store {
-              _id
               name
               slug
-              profile_picture {
-                url
-              }
-              status
             }
             variants {
-              _id
-              product
-              size
-              flavor
               price
               promotion
-              quantity
               picture {
                 url
               }
             }
           }
-          totalDocs
-          limit
           totalPages
-          page
-          pagingCounter
-          hasPrevPage
-          hasNextPage
-          prevPage
-          nextPage
         }
       }
     `

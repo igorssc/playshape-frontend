@@ -11,6 +11,7 @@ type ProductType = {
   idVariant: string
   name: string
   description: string
+  slug: string
   size: string
   brand: string
   quantity?: number

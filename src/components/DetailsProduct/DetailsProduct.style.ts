@@ -34,6 +34,37 @@ export const Content = styled.div`
         flex-direction: column;
         justify-content: space-around;
 
+        .categories {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-wrap: wrap;
+          width: 350px;
+          max-width: 90%;
+          margin-top: 20px;
+
+          > * {
+            margin: 2px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-color: ${theme('mode', {
+              light: colors.grayLight,
+              dark: colors.grayDark
+            })};
+            color: ${theme('mode', {
+              light: colors.grayDarker,
+              dark: colors.grayLight
+            })};
+
+            &:hover {
+              border-color: ${theme('mode', {
+                light: colors.grayDarker,
+                dark: colors.grayLight
+              })};
+            }
+          }
+        }
+
         > h2 {
           font-size: 0.9rem;
 
@@ -71,6 +102,7 @@ export const Content = styled.div`
 
         .details {
           text-align: center;
+          margin: 20px auto 10px auto;
 
           h3 {
             text-decoration: line-through;
@@ -104,7 +136,7 @@ export const Content = styled.div`
               dark: colors.grayLighter
             })};
 
-            &:hover {
+            &:not(:disabled):hover {
               filter: ${theme('mode', {
                 light: 'brightness(1.3)',
                 dark: 'brightness(0.9);'
@@ -129,6 +161,11 @@ export const Content = styled.div`
             &:hover {
               filter: brightness(0.9);
             }
+          }
+
+          button:disabled {
+            filter: brightness(0.6);
+            cursor: not-allowed;
           }
         }
       }

@@ -23,16 +23,29 @@ export const Content = styled.div`
   ul {
     display: flex;
 
+    p {
+      display: flex;
+      align-items: center;
+      margin-right: 15px;
+    }
+
     li {
       height: 50px;
       list-style: none;
-      padding: 0 0.4rem;
+      padding: 0 0.1rem;
       cursor: pointer;
       border-bottom: 2px solid transparent;
       line-height: 50px;
 
       button {
         height: 50px;
+      }
+
+      &.shoppingCart > * {
+        color: ${theme('mode', {
+          light: colors.grayDark,
+          dark: colors.grayLight
+        })};
       }
 
       &:hover {

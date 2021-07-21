@@ -4,31 +4,12 @@ import { useBackdrop } from '../../../hooks/UseBackdrop'
 import { usePaginate } from '../../../hooks/UsePaginate'
 import { Container } from './ButtonPagination.style'
 
-interface ButtonPaginationProps {
-  paginate: {
-    totalDocs: number
-    limit: number
-    totalPages: number
-    page: number
-    pagingCounter: number
-    hasPrevPage: boolean
-    hasNextPage: boolean
-    prevPage: number
-    nextPage: number
-  }
-  handlePaginate?: (
-    search: string,
-    searchPage: number,
-    type?: 'find' | 'search'
-  ) => Promise<void>
-}
-export const ButtonPagination = ({
-  paginate,
-  handlePaginate
-}: ButtonPaginationProps) => {
+export const ButtonPagination = () => {
   const { search, type } = usePaginate()
 
   const { handleOpen, handleClose } = useBackdrop()
+
+  const { paginate, handlePaginate } = usePaginate()
 
   return (
     <Container>

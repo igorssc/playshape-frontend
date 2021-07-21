@@ -1,3 +1,4 @@
+import { Chip } from '@material-ui/core'
 import Link from 'next/link'
 import { useSnackbar } from 'notistack'
 import { Dispatch, SetStateAction } from 'react'
@@ -6,67 +7,37 @@ import { formatCurrency } from '../../utils/format'
 import { Select } from '../Select/Select'
 import { Container, Content } from './DetailsProduct.style'
 
+type VariantType = {
+  _id: string
+  size: string
+  flavor: string
+  price: number
+  promotion: number
+  quantity: number
+  picture: {
+    url: string
+  }
+}
 interface DetailsProductProps {
   product: {
     _id: string
     name: string
     description: string
-    status: string
+    slug: string
     brand: string
+    status: string
     category: {
-      _id: string
       name: string
-      description: string
       slug: string
     }[]
     store: {
-      _id: string
       name: string
       slug: string
-      profile_picture: {
-        url: string
-      }
-      status: string
     }
-    variants: {
-      _id: string
-      product: string
-      size: string
-      flavor: string
-      price: number
-      promotion: number
-      quantity: number
-      picture: {
-        url: string
-      }
-    }[]
+    variants: VariantType[]
   }
-  variant: {
-    _id: string
-    product: string
-    size: string
-    flavor: string
-    price: number
-    promotion: number
-    quantity: number
-    picture: {
-      url: string
-    }
-  }
-  setVariant: Dispatch<
-    SetStateAction<{
-      _id: string
-      product: string
-      size: string
-      flavor: string
-      price: number
-      promotion: number
-      quantity: number
-      picture: {
-        url: string
-      }
-    }>
-  >
+  variant: VariantType
+  setVariant: Dispatch<SetStateAction<VariantType>>
   sizes: string[]
   flavors: string[]
 }
@@ -78,7 +49,7 @@ export const DetailsProduct = ({
   sizes,
   flavors
 }: DetailsProductProps) => {
-  const { addToCart } = useShoppingCart()
+  const { products: productsShoppingCart, addToCart } = useShoppingCart()
   const { enqueueSnackbar } = useSnackbar()
 
   return (
@@ -102,6 +73,13 @@ export const DetailsProduct = ({
                 </Link>
               </h2>
               <p>{product.brand}</p>
+              <div className="categories">
+                {product.category.map(element => (
+                  <Link href={`/category/${element.slug}`}>
+                    <Chip variant="outlined" label={element.name} />
+                  </Link>
+                ))}
+              </div>
               <form action="#">
                 <Select
                   label="Tamanho"
@@ -144,6 +122,9 @@ export const DetailsProduct = ({
               </div>
               <div>
                 <button
+                  disabled={productsShoppingCart.some(
+                    element => element.idVariant === variant._id
+                  )}
                   onClick={() => {
                     try {
                       addToCart({
@@ -151,6 +132,7 @@ export const DetailsProduct = ({
                         idVariant: variant._id,
                         name: product.name,
                         description: product.description,
+                        slug: product.slug,
                         size: variant.size,
                         brand: product.brand,
                         price: variant.price,
@@ -174,7 +156,11 @@ export const DetailsProduct = ({
                     }
                   }}
                 >
-                  Adicionar ao carrinho
+                  {productsShoppingCart.some(
+                    element => element.idVariant === variant._id
+                  )
+                    ? 'Adicionado ao carrinho'
+                    : 'Adicionar ao carrinho'}
                 </button>
                 <button>Comprar</button>
               </div>

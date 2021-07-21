@@ -97,47 +97,21 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
             _id
             name
             description
-            status
             brand
             slug
-            category {
-              _id
-              name
-              description
-              updated_at
-              created_at
-            }
             store {
-              _id
               name
               slug
-              profile_picture {
-                url
-              }
-              status
             }
             variants {
-              _id
-              product
-              size
-              flavor
               price
               promotion
-              quantity
               picture {
                 url
               }
             }
           }
-          totalDocs
-          limit
           totalPages
-          page
-          pagingCounter
-          hasPrevPage
-          hasNextPage
-          prevPage
-          nextPage
         }
 
         findCategory(input: {slug: "${String(slug)}"}) {
