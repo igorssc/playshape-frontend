@@ -1,8 +1,9 @@
 import gql from 'graphql-tag'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-import { ReactNode, useState } from 'react'
+import { ReactNode } from 'react'
 import { ProductCatalog } from '../../components/ProductCatalog/ProductCatalog'
+import { PaginateProvider } from '../../hooks/UsePaginate'
 import { client } from '../../services/api'
 
 interface CategoryPageProps {
@@ -67,83 +68,19 @@ const CategoryPage: NextPage = ({
   search,
   category
 }: CategoryPageProps) => {
-  const [productsState, setProductsState] =
-    useState<CategoryPageProps['products']>(products)
-
-  const [paginateState, setPaginateState] =
-    useState<CategoryPageProps['paginate']>(paginate)
-
-  const handlePaginate = async (searchPage: number) => {
-    const { data } = await client.query({
-      query: gql`
-       {
-        findProducts(input: {product: {category: {slug: "${search}"}}, limit: 4,page: ${searchPage}}){
-          products {
-            _id
-            name
-            description
-            status
-            brand
-            slug
-            category {
-              _id
-              name
-              description
-              updated_at
-              created_at
-            }
-            store {
-              _id
-              name
-              slug
-              profile_picture {
-                url
-              }
-              status
-            }
-            variants {
-              _id
-              product
-              size
-              flavor
-              price
-              promotion
-              quantity
-              picture {
-                url
-              }
-            }
-          }
-          totalDocs
-          limit
-          totalPages
-          page
-          pagingCounter
-          hasPrevPage
-          hasNextPage
-          prevPage
-          nextPage
-        }
-      }
-    `
-    })
-
-    setPaginateState(data.findProducts)
-    setProductsState(data.findProducts.products)
-  }
-
   return (
-    <>
+    <PaginateProvider>
       <Head>
-        <title>{search} | Playshape</title>
+        <title>{category.name} | Playshape</title>
       </Head>
       <ProductCatalog
         title={`Resultado da categoria: ${category.name}`}
-        products={productsState}
-        paginate={paginateState}
-        handlePaginate={handlePaginate}
+        type={'find'}
+        search={search}
+        products={products}
+        paginate={paginate}
       />
-    </>
+    </PaginateProvider>
   )
 }
 
@@ -208,8 +145,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
           description
         }
       }
-    `,
-    context: { nextContext: ctx }
+    `
   })
 
   return {

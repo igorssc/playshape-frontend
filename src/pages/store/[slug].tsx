@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { ReactNode } from 'react'
 import { DetailsStore } from '../../components/DetailsStore/DetailsStore'
 import { ProductCatalog } from '../../components/ProductCatalog/ProductCatalog'
+import { PaginateProvider } from '../../hooks/UsePaginate'
 import { client } from '../../services/api'
 
 interface StorePageProps {
@@ -79,7 +80,7 @@ interface StorePageProps {
 
 const StorePage: NextPage = ({ store, products, paginate }: StorePageProps) => {
   return (
-    <>
+    <PaginateProvider>
       <Head>
         <title>{store.name} | Playshape</title>
       </Head>
@@ -88,7 +89,7 @@ const StorePage: NextPage = ({ store, products, paginate }: StorePageProps) => {
         products={products}
         title={`Produtos disponíveis de ${store.name}`}
       />
-    </>
+    </PaginateProvider>
   )
 }
 

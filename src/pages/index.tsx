@@ -7,6 +7,7 @@ import { CarrouselCategories } from '../components/CarrouselCategories/Carrousel
 import { InitialMessage } from '../components/InitialMessage/InitialMessage'
 import { ProductCatalog } from '../components/ProductCatalog/ProductCatalog'
 import { SubscribeNewsletter } from '../components/SubscribeNewsletter/SubscribeNewsletter'
+import { PaginateProvider } from '../hooks/UsePaginate'
 import { client } from '../services/api'
 
 interface IndexPageProps {
@@ -57,7 +58,7 @@ interface IndexPageProps {
 const IndexPage: NextPage = (props: IndexPageProps) => {
   const [session, loading] = useSession()
   return (
-    <>
+    <PaginateProvider>
       <Head>
         <title>Home | Playshape</title>
       </Head>
@@ -68,7 +69,7 @@ const IndexPage: NextPage = (props: IndexPageProps) => {
         products={props.products}
       />
       <SubscribeNewsletter />
-    </>
+    </PaginateProvider>
   )
 }
 

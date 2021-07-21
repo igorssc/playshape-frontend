@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { usePaginate } from '../../hooks/UsePaginate'
 import { ButtonPagination } from '../Buttons/Pagination/ButtonPagination'
 import { ProductGroup } from '../ProductGroup/ProductGroup'
 import { Container, Content } from './ProductCatalog.style'
@@ -52,14 +54,34 @@ interface ProductCatalogProps {
     nextPage: number
   }
   handlePaginate?: (searchPage: number) => void
+  search?: string
+  type?: 'find' | 'search'
 }
 
 export const ProductCatalog = ({
-  products,
+  products: productsDefault,
   title,
-  paginate,
-  handlePaginate
+  search,
+  type,
+  paginate: paginateDefault
 }: ProductCatalogProps) => {
+  const {
+    products,
+    paginate,
+    setProducts,
+    setPaginate,
+    handlePaginate,
+    setSearch,
+    setType
+  } = usePaginate()
+
+  useEffect(() => {
+    setPaginate(paginateDefault)
+    setProducts(productsDefault)
+    search && setSearch(search)
+    type && setType(type)
+  }, [])
+
   return (
     <Container>
       <Content>

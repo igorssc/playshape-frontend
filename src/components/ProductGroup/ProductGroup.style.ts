@@ -18,6 +18,7 @@ export const Content = styled.div`
   text-align: center;
 
   > img {
+    cursor: pointer;
     margin-top: 1rem;
     max-width: 80%;
   }

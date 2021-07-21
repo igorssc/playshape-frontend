@@ -36,7 +36,7 @@ export function BackdropProvider({ children }: BackdropProviderProps) {
     <BackdropContext.Provider
       value={{ open, handleOpen, handleClose, handleToggle }}
     >
-      <Backdrop open={open} style={{ zIndex: 9999 }} onClick={handleClose}>
+      <Backdrop open={open} style={{ zIndex: 9999 }}>
         <CircularProgress color="inherit" />
       </Backdrop>
       {children}

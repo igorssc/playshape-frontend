@@ -1,5 +1,7 @@
 import Pagination from '@material-ui/lab/Pagination'
 import React from 'react'
+import { useBackdrop } from '../../../hooks/UseBackdrop'
+import { usePaginate } from '../../../hooks/UsePaginate'
 import { Container } from './ButtonPagination.style'
 
 interface ButtonPaginationProps {
@@ -14,18 +16,28 @@ interface ButtonPaginationProps {
     prevPage: number
     nextPage: number
   }
-  handlePaginate?: (searchPage: number) => void
+  handlePaginate?: (
+    search: string,
+    searchPage: number,
+    type?: 'find' | 'search'
+  ) => Promise<void>
 }
 export const ButtonPagination = ({
   paginate,
   handlePaginate
 }: ButtonPaginationProps) => {
+  const { search, type } = usePaginate()
+
+  const { handleOpen, handleClose } = useBackdrop()
+
   return (
     <Container>
       <Pagination
         count={paginate.totalPages}
         onChange={(_, page) => {
-          handlePaginate(page)
+          handleOpen()
+          handlePaginate(search, page, type)
+          setTimeout(() => handleClose(), 50)
         }}
         showFirstButton
         showLastButton

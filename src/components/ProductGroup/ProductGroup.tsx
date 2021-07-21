@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Router from 'next/router'
 import { formatCurrency } from '../../utils/format'
 import { Container, Content } from './ProductGroup.style'
 
@@ -45,7 +46,11 @@ export const ProductGroup = ({ product }: ProductGroupProps) => {
   return (
     <Container>
       <Content>
-        <img src={product.variants[0].picture.url} alt={product.name} />
+        <img
+          src={product.variants[0].picture.url}
+          alt={product.name}
+          onClick={() => Router.push(`/product/${product.slug}`)}
+        />
         <Link href={`/product/${product.slug}`}>
           <a className="name">
             <h1>{product.name}</h1>

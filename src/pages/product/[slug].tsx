@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { ReactNode, useEffect, useState } from 'react'
 import { DetailsProduct } from '../../components/DetailsProduct/DetailsProduct'
 import { ProductCatalog } from '../../components/ProductCatalog/ProductCatalog'
+import { PaginateProvider } from '../../hooks/UsePaginate'
 import { client } from '../../services/api'
 
 interface ProductPageProps {
@@ -101,7 +102,7 @@ const ProductPage: NextPage = ({
     .map(variant => variant.flavor)
 
   return (
-    <>
+    <PaginateProvider>
       <Head>
         <title>{product.name} | Playshape</title>
       </Head>
@@ -113,10 +114,10 @@ const ProductPage: NextPage = ({
         flavors={flavors}
       />
       <ProductCatalog
-        products={relatedProducts}
         title="Produtos relacionados"
+        products={relatedProducts}
       />
-    </>
+    </PaginateProvider>
   )
 }
 

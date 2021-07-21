@@ -19,6 +19,11 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   max-width: 1120px;
+
+  @media (max-width: 768px) {
+    width: 95%;
+    margin: auto;
+  }
 `
 
 export const Ball = styled.div`
