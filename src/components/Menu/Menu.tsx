@@ -50,45 +50,8 @@ export const Menu: React.FC<MenuProps> = props => {
             </li>
           )}
 
-          {isAuthenticated && (
-            <>
-              <p>Olá, {user.name.split(' ')[0]}</p>
-              <li>
-                <IconButton
-                  color="inherit"
-                  onClick={handleMenu}
-                  aria-haspopup="true"
-                  aria-controls="menu-appbar"
-                  aria-label="account of current user"
-                >
-                  <Avatar
-                    alt={user?.name}
-                    src={user?.profile_picture?.url}
-                  ></Avatar>
-                </IconButton>
-                <MenuComponent
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right'
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right'
-                  }}
-                  open={open}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleClose}>
-                    <Link href="/profile">Meu perfil</Link>
-                  </MenuItem>
-                  <MenuItem onClick={handleExit}>Sair</MenuItem>
-                </MenuComponent>
-              </li>
-            </>
-          )}
+          {isAuthenticated && <p>Olá, {user.name.split(' ')[0]}</p>}
+
           <li className="shoppingCart">
             <Link href="/cart">
               <IconButton aria-label="cart">
@@ -98,6 +61,43 @@ export const Menu: React.FC<MenuProps> = props => {
               </IconButton>
             </Link>
           </li>
+
+          {isAuthenticated && (
+            <li>
+              <IconButton
+                color="inherit"
+                onClick={handleMenu}
+                aria-haspopup="true"
+                aria-controls="menu-appbar"
+                aria-label="account of current user"
+              >
+                <Avatar
+                  alt={user?.name}
+                  src={user?.profile_picture?.url}
+                ></Avatar>
+              </IconButton>
+              <MenuComponent
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right'
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right'
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>
+                  <Link href="/profile">Meu perfil</Link>
+                </MenuItem>
+                <MenuItem onClick={handleExit}>Sair</MenuItem>
+              </MenuComponent>
+            </li>
+          )}
         </ul>
       </Content>
     </Container>

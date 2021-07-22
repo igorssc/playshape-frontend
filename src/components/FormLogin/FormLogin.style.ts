@@ -31,7 +31,7 @@ export const Container = styled.div`
     }
 
     input {
-      padding-left: 10px;
+      padding: 0 10px;
       margin-bottom: 10px;
       border: none;
       height: 2rem;
@@ -39,6 +39,10 @@ export const Container = styled.div`
       background: ${theme('mode', {
         light: '#eee',
         dark: colors.grayDark
+      })};
+      color: ${theme('mode', {
+        light: colors.grayDarker,
+        dark: colors.grayLighter
       })};
     }
 

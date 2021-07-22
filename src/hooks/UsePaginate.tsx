@@ -21,7 +21,8 @@ interface PaginateContextData {
   handlePaginate: (
     search: string,
     searchPage: number,
-    type?: 'find' | 'search'
+    type?: 'find' | 'search',
+    limit?: number
   ) => Promise<void>
 }
 
@@ -65,13 +66,20 @@ export function PaginateProvider({ children }: PaginateProviderProps) {
 
   const [type, setType] = useState<'find' | 'search'>('find')
 
-  const handlePaginate = async (search: string, searchPage: number) => {
+  const handlePaginate = async (
+    search: string,
+    searchPage: number,
+    type: 'find' | 'search',
+    limit: number = 4
+  ) => {
     const { data } = await client.query({
       query: gql`
        {
-        ${
-          type === 'find' ? 'findProducts' : 'searchProducts'
-        }(input: {product: {category: {slug: "${search}"}}, limit: 4,page: ${searchPage}}){
+        ${type === 'find' ? 'findProducts' : 'searchProducts'}(input: {${
+        type === 'find'
+          ? `product: {category: {slug: "${search}"}}`
+          : `value: "${search}"`
+      }, limit: ${limit}, page: ${searchPage}}){
           products {
             _id
             name
@@ -96,8 +104,12 @@ export function PaginateProvider({ children }: PaginateProviderProps) {
     `
     })
 
-    setPaginate(data.findProducts)
-    setProducts(data.findProducts.products)
+    setPaginate(type === 'find' ? data.findProducts : data.searchProducts)
+    setProducts(
+      type === 'find'
+        ? data.findProducts.products
+        : data.searchProducts.products
+    )
   }
 
   return (

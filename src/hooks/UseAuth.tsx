@@ -187,11 +187,11 @@ export function AuthProvider({ children }) {
       `
     })
 
+    setUser(data.authenticateUser.user)
+
     setCookie(undefined, 'playshape.token', data.authenticateUser.token, {
       maxAge: 60 * 60 * 1 // 1 hour
     })
-
-    setUser(data.authenticateUser.user)
 
     Router.push('/profile')
   }

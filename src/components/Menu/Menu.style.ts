@@ -64,14 +64,14 @@ export const Content = styled.div`
   @media (max-width: 768px) {
     ul {
       p {
-        margin-right: 6px;
+        margin-right: 0px;
       }
 
       li {
         padding: 0;
 
         button {
-          padding: 6px;
+          padding: 10px;
         }
       }
     }

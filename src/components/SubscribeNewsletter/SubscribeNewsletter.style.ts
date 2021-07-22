@@ -20,6 +20,7 @@ export const Content = styled.div`
   h1 {
     font-size: 1.4rem;
     margin-bottom: 2rem;
+    text-align: center;
   }
 
   form {

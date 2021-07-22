@@ -69,6 +69,7 @@ export const Content = styled.div`
           font-size: 0.9rem;
 
           > a {
+            font-weight: bold;
             transition: all 0.2s;
 
             &:hover {

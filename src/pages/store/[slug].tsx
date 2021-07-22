@@ -95,7 +95,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
           status
         }
 
-        findProducts(input: {product: {store: {slug: "${String(slug)}"}}}) {
+        findProducts(input: {product: {store: {slug: "${String(
+          slug
+        )}"}}, limit: 12}) {
           products {
             _id
             name
@@ -128,7 +130,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       }
     }
   } catch (error) {
-    console.log(error)
     return {
       redirect: {
         destination: '/',

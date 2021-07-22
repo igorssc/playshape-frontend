@@ -94,6 +94,10 @@ export const Content = styled.div`
         light: '#eee',
         dark: colors.grayDark
       })};
+      color: ${theme('mode', {
+        light: colors.grayDarker,
+        dark: colors.grayLighter
+      })};
     }
   }
 
