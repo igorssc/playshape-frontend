@@ -136,6 +136,8 @@ export const DetailsProduct = ({
                         size: variant.size,
                         brand: product.brand,
                         price: variant.price,
+                        quantity: variant.quantity,
+                        quantitySelected: 1,
                         promotion: variant.promotion ?? null,
                         photoUrl: variant.picture.url,
                         store: {

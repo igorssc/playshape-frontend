@@ -1,18 +1,20 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { useShoppingCart } from '../../hooks/UseShoppingCart'
+import { TableCart } from '../../components/TableCart/TableCart'
+import { Container, Content } from '../../styles/pages/Cart'
 
 const IndexCart: NextPage = () => {
-  const { products } = useShoppingCart()
-
   return (
-    <>
+    <Container>
       <Head>
         <title>Carrinho | Playshape</title>
       </Head>
-      <h1>Carrinho de compras</h1>
-      <div>{JSON.stringify(products)}</div>
-    </>
+
+      <Content>
+        <h1>Carrinho de compras</h1>
+        <TableCart />
+      </Content>
+    </Container>
   )
 }
 

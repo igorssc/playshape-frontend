@@ -1,3 +1,4 @@
+import { useSnackbar } from 'notistack'
 import {
   createContext,
   ReactNode,
@@ -14,7 +15,8 @@ type ProductType = {
   slug: string
   size: string
   brand: string
-  quantity?: number
+  quantity: number
+  quantitySelected: number
   price: number
   promotion?: number
   photoUrl: string
@@ -31,6 +33,8 @@ type ProductType = {
 interface ShoppingCartContextData {
   products: ProductType[]
   addToCart: (product: ProductType) => void
+  removeProduct: (idProduct: string) => void
+  changeQuantity: (idVariantProduct: string, type: 'add' | 'remove') => void
 }
 
 interface ShoppingCartProviderProps {
@@ -42,6 +46,8 @@ const ShoppingCartContext = createContext<ShoppingCartContextData>(
 )
 
 export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
+  const { enqueueSnackbar } = useSnackbar()
+
   const [products, setProducts] = useState([] as ProductType[])
 
   useEffect(() => {
@@ -55,15 +61,74 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       throw new Error(`${product.name} já adicionado ao carrinho`)
     }
 
-    const updatedShoppingCart = [...products, { ...product, quantity: 1 }]
+    const updatedShoppingCart = [...products, product]
 
     setProducts(updatedShoppingCart)
 
     localStorage.setItem('shoppingCart', JSON.stringify(updatedShoppingCart))
   }
 
+  const removeProduct = (idVariantProduct: string) => {
+    const updatedShoppingCart = products.filter(
+      product => product.idVariant !== idVariantProduct
+    )
+
+    setProducts(updatedShoppingCart)
+
+    localStorage.setItem('shoppingCart', JSON.stringify(updatedShoppingCart))
+
+    enqueueSnackbar('Produto removido do carrinho', {
+      variant: 'error'
+    })
+  }
+
+  const changeQuantity = (idVariantProduct: string, type: 'add' | 'remove') => {
+    const productSelected = products.find(
+      product => product.idVariant === idVariantProduct
+    )
+
+    if (!productSelected) {
+      throw new Error('Produto não encontrado')
+    }
+
+    if (type === 'add') {
+      if (productSelected.quantitySelected + 1 > productSelected.quantity) {
+        enqueueSnackbar('Quantidade indisponível', {
+          variant: 'error'
+        })
+        throw new Error()
+      }
+    }
+
+    if (type === 'remove') {
+      if (productSelected.quantitySelected === 1) {
+        enqueueSnackbar(
+          'Não é possível selecionar uma quantidade menor que 1',
+          { variant: 'error' }
+        )
+
+        throw new Error()
+      }
+    }
+    setProducts(
+      products.map(product =>
+        product.idVariant === idVariantProduct
+          ? {
+              ...product,
+              quantitySelected:
+                type === 'add'
+                  ? product.quantitySelected + 1
+                  : product.quantitySelected - 1
+            }
+          : product
+      )
+    )
+  }
+
   return (
-    <ShoppingCartContext.Provider value={{ products, addToCart }}>
+    <ShoppingCartContext.Provider
+      value={{ products, addToCart, removeProduct, changeQuantity }}
+    >
       {children}
     </ShoppingCartContext.Provider>
   )

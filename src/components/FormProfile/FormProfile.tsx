@@ -188,6 +188,7 @@ export const FormProfile: React.FC = () => {
           </div>
         </div>
         <form onSubmit={handleSubmit(handleUpdateUser)}>
+          <h2>Informações pessoais</h2>
           <div>
             <div>
               <label htmlFor="name">Nome</label>
@@ -383,7 +384,7 @@ export const FormProfile: React.FC = () => {
                   onClick={() => removeAddress(index)}
                 >
                   <HighlightOffIcon color="secondary" />
-                  &nbsp;Remover endereço
+                  &nbsp;Remover endereço acima
                 </p>
               </fieldset>
             )

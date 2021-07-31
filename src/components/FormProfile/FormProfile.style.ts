@@ -13,11 +13,12 @@ export const Content = styled.div`
     width: 100%;
 
     h2 {
-      margin-left: 10px;
+      font-size: 1.2rem;
+      margin: 30px 0 30px 10px;
     }
 
     > button {
-      margin: 1rem 0 1rem 10px;
+      margin: 40px 0 1rem 10px;
       background: ${theme('mode', {
         light: colors.grayDarker,
         dark: colors.grayDark
@@ -125,7 +126,7 @@ export const Content = styled.div`
 
       > button {
         display: block;
-        margin: 1rem auto;
+        margin: 40px auto 1rem auto;
       }
 
       > div,
