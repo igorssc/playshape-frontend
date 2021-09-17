@@ -20,9 +20,9 @@ interface StorePageProps {
       city: string
       state: string
       zipCode: string
-      lat: string
-      lng: string
-    }[]
+      lat?: string
+      lng?: string
+    }
     profile_picture: {
       url: string
     }

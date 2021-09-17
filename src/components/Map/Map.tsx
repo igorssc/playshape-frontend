@@ -6,7 +6,7 @@ interface MapProps {
   center: {
     lat: string
     lng: string
-  }[]
+  }
   zoom: number
 }
 interface PointOnTheMapProps {
@@ -39,13 +39,10 @@ export const Map = (props: MapProps) => {
         }}
         defaultZoom={props.zoom}
       >
-        {props.center.map(point => (
-          <PointOnTheMap
-            key={`${point.lat} ${point.lng}`}
-            lat={Number(point.lat)}
-            lng={Number(point.lng)}
-          />
-        ))}
+        <PointOnTheMap
+          lat={Number(props.center.lat)}
+          lng={Number(props.center.lng)}
+        />
       </GoogleMapReact>
     </div>
   )

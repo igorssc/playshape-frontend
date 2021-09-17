@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core'
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
+import Link from 'next/link'
 import React from 'react'
 import { useShoppingCart } from '../../hooks/UseShoppingCart'
 import { formatCurrency } from '../../utils/format'
@@ -39,35 +40,47 @@ export const TableCart = () => {
                 <TableCell>
                   <div className="details">
                     <img src={product.photoUrl} alt={product.name} />
-                    {product.name}
+                    <Link href={`/product/${product.slug}`}>
+                      <a
+                        href={`/product/${product.slug}`}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        {product.name}
+                      </a>
+                    </Link>
                   </div>
                 </TableCell>
-                <TableCell>{formatCurrency(product.price)}</TableCell>
+                <TableCell>
+                  {formatCurrency(product.promotion ?? product.price)}
+                </TableCell>
                 <TableCell>
                   <div className="productQuantity">
-                    <div>
-                      <NavigateBeforeIcon
-                        onClick={() => {
-                          try {
-                            changeQuantity(product.idVariant, 'remove')
-                          } catch {}
-                        }}
-                      />
+                    <div
+                      onClick={() => {
+                        try {
+                          changeQuantity(product.idVariant, 'remove')
+                        } catch {}
+                      }}
+                    >
+                      <NavigateBeforeIcon />
                     </div>
                     <div>{product.quantitySelected}</div>
-                    <div>
-                      <NavigateNextIcon
-                        onClick={() => {
-                          try {
-                            changeQuantity(product.idVariant, 'add')
-                          } catch {}
-                        }}
-                      />
+                    <div
+                      onClick={() => {
+                        try {
+                          changeQuantity(product.idVariant, 'add')
+                        } catch {}
+                      }}
+                    >
+                      <NavigateNextIcon />
                     </div>
                   </div>
                 </TableCell>
                 <TableCell>
-                  {formatCurrency(product.price * product.quantitySelected)}
+                  {formatCurrency(
+                    (product.promotion ?? product.price) *
+                      product.quantitySelected
+                  )}
                 </TableCell>
               </TableRow>
             ))}

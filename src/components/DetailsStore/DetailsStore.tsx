@@ -14,9 +14,9 @@ interface DetailsStoreProps {
       city: string
       state: string
       zipCode: string
-      lat: string
-      lng: string
-    }[]
+      lat?: string
+      lng?: string
+    }
     profile_picture: {
       url: string
     }
@@ -26,7 +26,9 @@ interface DetailsStoreProps {
 }
 
 export const DetailsStore = ({ store }: DetailsStoreProps) => {
-  const existsLatLng = store.address.some(address => address.lat && address.lng)
+  const existsLatLng = store.address?.lat && store.address?.lng
+
+  const position = { lat: store.address?.lat, lng: store.address?.lng }
 
   return (
     <Container>
@@ -45,17 +47,16 @@ export const DetailsStore = ({ store }: DetailsStoreProps) => {
             <ul>
               <li>Telefone: {store.phone && formatPhone(store.phone)}</li>
               <li>
-                Endereço(s): &nbsp;
-                {store.address.map(address => (
-                  <p key={formatAddress(address)}>{formatAddress(address)}</p>
-                ))}
+                Endereço: &nbsp;
+                <p>{store.address && formatAddress(store.address)}</p>
               </li>
               <li>Ativo desde: {formatDate(new Date(store.created_at))}</li>
             </ul>
           </div>
         </main>
       </Content>
-      {existsLatLng && <Map center={store.address} zoom={16} />}
+
+      {existsLatLng && <Map center={position} zoom={16} />}
     </Container>
   )
 }
