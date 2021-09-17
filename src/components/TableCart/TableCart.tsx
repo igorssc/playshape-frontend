@@ -26,7 +26,7 @@ export const TableCart = () => {
               <TableCell align="left">PRODUTO</TableCell>
               <TableCell align="left">PREÇO</TableCell>
               <TableCell align="left">QUANTIDADE</TableCell>
-              <TableCell align="left">TOTAL</TableCell>
+              <TableCell align="left">SUBTOTAL</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

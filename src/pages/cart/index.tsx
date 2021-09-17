@@ -1,5 +1,6 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
+import Link from 'next/link'
 import { TableCart } from '../../components/TableCart/TableCart'
 import { TableTotalCart } from '../../components/TableTotalCart/TableTotalCart'
 import { Container, Content } from '../../styles/pages/Cart'
@@ -21,7 +22,9 @@ const IndexCart: NextPage = () => {
           />
           <div>
             <TableTotalCart />
-            <button>Ir para pagamento</button>
+            <button>
+              <Link href="/payment">Ir para pagamento</Link>
+            </button>
           </div>
         </div>
       </Content>
